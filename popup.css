@@ -1,0 +1,142 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 320px;
+  margin: 0;
+  background: #ffffff;
+  color: #172033;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+header {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid #d9dee7;
+}
+
+h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+#state {
+  color: #137333;
+  font-weight: 700;
+}
+
+#state.is-off {
+  color: #5f6368;
+}
+
+main {
+  padding: 12px 14px;
+}
+
+.setting-row {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 650;
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  width: 38px;
+  height: 22px;
+  flex: 0 0 auto;
+}
+
+.switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.switch-track {
+  width: 38px;
+  height: 22px;
+  border: 1px solid #94a3b8;
+  border-radius: 11px;
+  background: #cbd5e1;
+  cursor: pointer;
+}
+
+.switch-track::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 25%);
+  content: "";
+  transition: transform 120ms ease;
+}
+
+.switch input:checked + .switch-track {
+  border-color: #1d4ed8;
+  background: #1d4ed8;
+}
+
+.switch input:checked + .switch-track::after {
+  transform: translateX(16px);
+}
+
+.switch input:focus-visible + .switch-track {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.nickname-help {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #d9dee7;
+}
+
+.nickname-heading-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+#nickname-count {
+  color: #5f6368;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.nickname-help p {
+  margin: 7px 0 0;
+  color: #334155;
+  line-height: 1.4;
+}
+
+.nickname-help .privacy-note {
+  color: #5f6368;
+  font-size: 12px;
+}

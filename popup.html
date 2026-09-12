@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PowerSchool Quick Message</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <header>
+      <h1>Quick Message</h1>
+      <output id="state" aria-live="polite">On</output>
+    </header>
+    <main>
+      <label class="setting-row" for="message-notifications">
+        <span>New message notifications</span>
+        <span class="switch">
+          <input id="message-notifications" type="checkbox">
+          <span class="switch-track" aria-hidden="true"></span>
+        </span>
+      </label>
+      <section class="nickname-help" aria-labelledby="nickname-heading">
+        <div class="nickname-heading-row">
+          <h2 id="nickname-heading">Student nicknames</h2>
+          <output id="nickname-count" aria-live="polite">0 saved</output>
+        </div>
+        <p>Select the <strong>✎</strong> button beside a student to set or remove a nickname.</p>
+        <p class="privacy-note">Only the display changes. Recipient search always uses the original PowerSchool name.</p>
+      </section>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

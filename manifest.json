@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "PowerSchool Quick Message",
+  "description": "Put CAP, CAPI, and CEP class codes first, add display-only nicknames, and preserve native PowerSchool identity.",
+  "version": "1.8.13",
+  "minimum_chrome_version": "102",
+  "permissions": [
+    "notifications",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://vas.educator.powerschool.com/*"
+  ],
+  "action": {
+    "default_title": "PowerSchool Quick Message",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://vas.educator.powerschool.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

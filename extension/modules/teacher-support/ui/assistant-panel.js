@@ -8,6 +8,7 @@
     let panel = null;
     let firstAction = null;
     let targetHint = null;
+    let wasOpen = false;
 
     function focusEntry() {
       const entry = root.querySelector('#hub-assistant-teacher-support-entry');
@@ -43,14 +44,16 @@
 
     function render(model = {}) {
       const node = ensurePanel();
-      node.hidden = model.open !== true;
+      const isOpen = model.open === true;
+      const opening = isOpen && !wasOpen;
+      node.hidden = !isOpen;
       node.replaceChildren();
       firstAction = null;
 
       if (model.robotVisible) {
         const image = document.createElement('img');
         image.classList.add('ha-ts-robot');
-        if (model.reducedMotion !== true) image.classList.add('ha-ts-robot-bounce');
+        if (opening && model.reducedMotion !== true) image.classList.add('ha-ts-robot-bounce');
         image.src = String(assetUrl || '');
         image.alt = '';
         image.setAttribute('aria-hidden', 'true');
@@ -80,6 +83,7 @@
         if (!firstAction) firstAction = button;
       }
       node.appendChild(actions);
+      wasOpen = isOpen;
       return node;
     }
 
@@ -89,6 +93,7 @@
 
     function close() {
       if (panel) panel.hidden = true;
+      wasOpen = false;
       focusEntry();
     }
 
@@ -126,6 +131,7 @@
       panel.remove();
       panel = null;
       firstAction = null;
+      wasOpen = false;
     }
 
     return Object.freeze({

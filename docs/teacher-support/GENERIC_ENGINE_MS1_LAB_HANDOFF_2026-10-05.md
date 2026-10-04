@@ -188,6 +188,41 @@ Deferred minor:
 
 - the inherited hover/focus small-scale and pointer press-compression microinteraction for the floating `?` is not separately implemented/tested. Visible keyboard focus, one-shot spring attention, finite motion, and reduced-motion handling are implemented. This is interaction polish only; it does not weaken the academic, privacy, native-action, lifecycle, or fail-closed safety gates.
 
+## Pre-Live Stress + Trace Gate
+
+A deterministic stress/trace pass was added before authorized live validation.
+
+Canonical audit:
+
+`docs/teacher-support/PRELIVE_STRESS_TRACE_2026-10-05.md`
+
+Stress evidence:
+
+- stress/test source commit: `809eec0b836a6e790ef9fe46ac0740c9637acb28`
+- GitHub Actions run: `37245489576`
+- Phase 0: **38 / 38 PASS**
+- Teacher Support full verifier: **95 / 95 PASS**
+- ten additional clean-process soak runs: **10 / 10 PASS**
+- each soak: **95 / 95 PASS**
+- total Teacher Support executions across full verifier + soak: **1,045**
+- deterministic Lab build: **PASS**
+- protected production diff: **PASS**
+- no stress-stage change under `extension/modules/teacher-support/**`
+
+Stress cases cover repeated lifecycle teardown/restart, grid-listener churn, irrelevant-click storms, route-event storms, queued-work races, fail-closed look-alike/scale fuzzing, and 1,000 real owned-DOM rerenders per suite execution.
+
+Recommended artifact for the authorized live smoke:
+
+- artifact name: `ms1-lab-prelive-stress`
+- artifact ID: `11318509392`
+- source commit: `809eec0b836a6e790ef9fe46ac0740c9637acb28`
+- uploaded archive digest: `sha256:20b23bafd4117e8b68d63b65e7215a4bcc8233ff568c4342d0306339e6b237f9`
+- internal `SHA256SUMS.txt` digest: `fe5ec5b0cb812f9f0a3d4929df16644e206f1ee8c8f1b4d19b32ee7abcd56cac`
+
+The stress artifact contains the same canonical Teacher Support module bytes as implementation checkpoint `02427d5...`; its later source commit records added stress/test/CI evidence in `BUILD_INFO.json`.
+
+Stress/trace closes the deterministic pre-live gate only. It does **not** replace the authorized PowerTeacher smoke.
+
 ## Protected Production State
 
 Verification confirms no change to:

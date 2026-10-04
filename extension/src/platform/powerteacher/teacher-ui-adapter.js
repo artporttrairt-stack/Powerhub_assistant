@@ -121,10 +121,13 @@
         .filter((candidate) => isVisible(documentLike, candidate))
         .map((candidate) => textOf(candidate).trim())
         .filter(Boolean);
-      const byUpper = new Map(visibleText.map((text) => [text.toUpperCase(), text]));
-      workflowMarkerEvidence = required
-        .filter((identifier) => byUpper.has(String(identifier).toUpperCase()))
-        .map((identifier) => byUpper.get(String(identifier).toUpperCase()));
+      const normalizeMarker = (value) => String(value || '').toUpperCase().replace(/[^A-Z0-9]+/g, '');
+      const visibleKeys = new Set(visibleText.map(normalizeMarker));
+      const aliases = markerContract && markerContract.semanticAliases || {};
+      workflowMarkerEvidence = required.filter((identifier) => {
+        const accepted = [identifier, ...(aliases[identifier] || [])];
+        return accepted.some((candidate) => visibleKeys.has(normalizeMarker(candidate)));
+      });
       if (required.length > 0 && workflowMarkerEvidence.length === required.length) {
         workflowMarkerPresent = true;
         workflowMarkerKey = 'ms1-strands';

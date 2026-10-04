@@ -13,7 +13,7 @@
     "https://vas.powerschool.com/teachers/*"
   ],
   "action": {
-    "default_title": "Hub assistant \u2014 Pilot",
+    "default_title": "Hub assistant — Pilot",
     "default_popup": "src/popup/popup.html",
     "default_icon": {
       "48": "assets/icons/icon48.png",
@@ -81,14 +81,38 @@
       ],
       "js": [
         "src/platform/powerteacher/teacher-context.js",
+        "src/platform/powerteacher/teacher-ui-contract.js",
+        "src/platform/powerteacher/teacher-ui-adapter.js",
+        "src/features/teacher-support/registry/workflow-registry.js",
+        "src/features/teacher-support/state/support-state-resolver.js",
+        "src/features/teacher-support/ui/bubble-ui.js",
+        "src/features/teacher-support/controller/support-controller.js",
         "src/features/teacher-support/guidance/pack-registry.js",
         "src/features/teacher-support/guidance-packs/cam-primary/ms1/applicability.js",
         "src/features/teacher-support/guidance-packs/cam-primary/ms1/sources.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/areas.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/levels.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/official-criteria.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/plain-explanations.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/classroom-evidence.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/observation-checklists.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/comparisons.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/subject-examples/english.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/subject-examples/maths.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/subject-examples/science.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/subject-examples/index.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/copy.en.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/copy.vi.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/workflow.js",
         "src/features/teacher-support/guidance-packs/cam-primary/ms1/pack.js",
         "src/features/teacher-support/runtime/support-lifecycle.js",
+        "src/features/teacher-support/runtime/teacher-support-runtime.js",
         "src/core/bootstrap/teacher-support-content.js"
       ],
-      "run_at": "document_idle"
+      "run_at": "document_idle",
+      "css": [
+        "src/features/teacher-support/ui/bubble-ui.css"
+      ]
     }
   ],
   "web_accessible_resources": [
@@ -97,7 +121,8 @@
         "assets/robot-assistant.png"
       ],
       "matches": [
-        "https://vas.educator.powerschool.com/*"
+        "https://vas.educator.powerschool.com/*",
+        "https://vas.powerschool.com/teachers/*"
       ]
     }
   ]

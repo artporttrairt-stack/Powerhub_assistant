@@ -22,11 +22,28 @@ Task 1 uses only `LIVE_READ_ONLY_VERIFIED` facts. No selector below is inferred 
 | Standards page Gear / Special Functions | `#special-functions` | `LIVE_READ_ONLY_VERIFIED` |
 | Show/Hide Filter | one dynamic toggle: `#hide-filter`; interpret `Show Filter` / `Hide Filter` semantics, never the ID name | `LIVE_READ_ONLY_VERIFIED` |
 | Standards filter input | `#simple-search-standard-final-grades`; computed visibility is state truth; presence alone is insufficient | `LIVE_READ_ONLY_VERIFIED` |
-| MS1 result marker | scope `#standard-final-grades`; candidates `th.standard-column-header.standard-col`; require at least one computed-visible header containing `MS1` after stabilization/re-read | `LIVE_READ_ONLY_VERIFIED` |
+| MS1 result marker | scope `#standard-final-grades`; candidates `th.standard-column-header.standard-col`; require **all 8 MS1 strands** as distinct semantic groups. Each group may match its canonical identifier (for example `MS1-Academic`) or its source-backed official display alias (for example `MS1 - Academic Achievement`). Generic `MS1` text, TA Grade, Ranking, or a partial strand set is insufficient. | `LIVE_READ_ONLY_VERIFIED` selector/state + source-backed semantic aliases |
 | Hub mount host | one extension-owned direct child of empirically stable `document.body`; host stability only, insertion still needs implementation smoke | `LIVE_READ_ONLY_VERIFIED` |
 | Section/route signals | `hashchange` and `popstate`; invalidate stale context and re-resolve; never persist raw section IDs | `LIVE_READ_ONLY_VERIFIED` |
 
 Route family `#/classes/final_grades` may be a supporting signal but is never sufficient by itself to prove the active Standards context.
+
+### MS1 semantic gate
+
+The eight canonical strand identifiers are:
+
+- `MS1-Academic`
+- `MS1-Attitude`
+- `MS1-Behaviour`
+- `MS1-Classwork`
+- `MS1-Communication`
+- `MS1-Collaboratively`
+- `MS1-Creativity`
+- `MS1-Equipment`
+
+The adapter normalizes whitespace and punctuation and may accept the corresponding official display names from sanitized standards metadata. It still requires one match for every canonical group. **MS1 text alone is insufficient.**
+
+This deliberately rejects look-alike MS1 columns such as TA Grade or Ranking and rejects partial strand visibility. The rubric opens only after the complete eight-strand context is visible.
 
 ## Filter-first behavior
 

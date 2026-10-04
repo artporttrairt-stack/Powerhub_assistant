@@ -3,13 +3,9 @@
 
   function freezeWorkflow(workflow) {
     return Object.freeze({
-      id: workflow.id,
-      version: workflow.version,
-      label: workflow.label,
-      status: workflow.status,
+      ...workflow,
       visibleInPicker: workflow.visibleInPicker === true,
       navigation: workflow.navigation || null,
-      applicability: workflow.applicability,
       guidancePackId: workflow.guidancePackId || null,
     });
   }

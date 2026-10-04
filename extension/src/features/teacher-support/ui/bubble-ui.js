@@ -30,6 +30,7 @@
       wakeNode = documentLike.createElement('button');
       wakeNode.className = 'hub-support-wake';
       wakeNode.textContent = 'Hub';
+      if (wakeNode.dataset) wakeNode.dataset.itemId = 'wake';
       rootNode.appendChild(barsNode);
       rootNode.appendChild(wakeNode);
       documentLike.body.appendChild(rootNode);

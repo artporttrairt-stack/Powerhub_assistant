@@ -1,0 +1,167 @@
+#psqm-message-information-pane-guide {
+  position: fixed;
+  z-index: 2147483643;
+  width: min(320px, calc(100vw - 28px));
+  padding: 12px;
+  border: 1px solid #b3becb;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(23 32 51 / 18%);
+  color: #172033;
+  font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+#psqm-message-information-pane-guide,
+#psqm-message-information-pane-guide * {
+  box-sizing: border-box;
+}
+
+.psqm-message-information-pane-guide__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.psqm-message-information-pane-guide__header h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.psqm-message-information-pane-guide__progress {
+  flex: none;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #edf4fd;
+  color: #34445e;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.psqm-message-information-pane-guide__body {
+  margin: 10px 0 12px;
+  color: #344054;
+}
+
+.psqm-message-information-pane-guide__close {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #526075;
+  cursor: pointer;
+  font: 20px/1 system-ui, sans-serif;
+}
+
+.psqm-message-information-pane-guide__close:hover {
+  background: #edf4fd;
+}
+
+.psqm-message-information-pane-guide__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.psqm-message-information-pane-guide__back,
+.psqm-message-information-pane-guide__next {
+  min-height: 34px;
+  padding: 6px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  font: 650 13px/1.35 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.psqm-message-information-pane-guide__back {
+  border: 1px solid #aeb9c7;
+  background: #fff;
+  color: #263348;
+}
+
+.psqm-message-information-pane-guide__next {
+  border: 1px solid #075fb4;
+  background: #075fb4;
+  color: #fff;
+}
+
+.psqm-message-information-pane-guide__back:hover:not(:disabled) {
+  background: #f4f7fa;
+}
+
+.psqm-message-information-pane-guide__next:hover {
+  background: #064f96;
+}
+
+.psqm-message-information-pane-guide__back:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.psqm-message-information-pane-guide__close:focus-visible,
+.psqm-message-information-pane-guide__back:focus-visible,
+.psqm-message-information-pane-guide__next:focus-visible {
+  outline: 3px solid #8fc7ff;
+  outline-offset: 2px;
+}
+
+.psqm-message-information-pane-guide__target {
+  outline: 3px solid #1683d8 !important;
+  outline-offset: 3px !important;
+  border-radius: 5px;
+}
+
+#psqm-message-information-pane-guide::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+#psqm-message-information-pane-guide[data-placement="left"]::after {
+  top: calc(var(--psqm-information-guide-arrow-offset, 24px) - 5px);
+  right: -6px;
+  border-top: 1px solid #b3becb;
+  border-right: 1px solid #b3becb;
+}
+
+#psqm-message-information-pane-guide[data-placement="right"]::after {
+  top: calc(var(--psqm-information-guide-arrow-offset, 24px) - 5px);
+  left: -6px;
+  border-bottom: 1px solid #b3becb;
+  border-left: 1px solid #b3becb;
+}
+
+#psqm-message-information-pane-guide[data-placement="below"]::after {
+  top: -6px;
+  left: calc(var(--psqm-information-guide-arrow-offset, 24px) - 5px);
+  border-top: 1px solid #b3becb;
+  border-left: 1px solid #b3becb;
+}
+
+#psqm-message-information-pane-guide[data-placement="above"]::after {
+  bottom: -6px;
+  left: calc(var(--psqm-information-guide-arrow-offset, 24px) - 5px);
+  border-right: 1px solid #b3becb;
+  border-bottom: 1px solid #b3becb;
+}
+
+@media (max-width: 760px) {
+  #psqm-message-information-pane-guide {
+    left: 14px !important;
+    right: 14px !important;
+    top: auto !important;
+    bottom: 14px;
+    width: auto;
+  }
+
+  #psqm-message-information-pane-guide::after {
+    display: none;
+  }
+}

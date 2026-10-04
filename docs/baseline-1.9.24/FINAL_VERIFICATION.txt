@@ -1,0 +1,13 @@
+Hub Assistant 1.9.24 final verification
+Date: 2026-09-28
+
+Chrome static package check: 12/12 PASS
+Edge static package check: 12/12 PASS
+Regression programs on exact extracted Chrome ZIP payload: 13/13 exited 0
+Pre-existing runtime files unchanged by SHA-256: 68/68
+Chrome/Edge store ZIP SHA-256: 4f2093facce850bf3c4a1d549c2dba7daa199cbec8198027032c53a84036da27
+Store ZIP root manifest.json: PASS
+Store ZIP integrity: PASS
+Delivery bundle ZIP integrity: PASS before final handoff refresh
+
+Note: final store submission still requires account-side listing completion, including a public privacy-policy URL and real current screenshots.

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hub Assistant Expanded</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header><h1>Hub Assistant Expanded</h1><span class="version">1.9.24</span></header>
+  <main>
+    <section id="language-first-use" class="language-first-use" hidden aria-labelledby="language-first-use-title">
+      <h2 id="language-first-use-title">Finish setup on PowerHub / Hoàn tất thiết lập trên PowerHub</h2>
+      <p>Use the Robot guide on the PowerHub page to choose the Assistant language. / Hãy dùng hướng dẫn Robot trên trang PowerHub để chọn ngôn ngữ Assistant.</p>
+    </section>
+
+    <section aria-labelledby="actions-title">
+      <h2 id="actions-title" data-i18n="popup.quickActions"></h2>
+      <button id="replay-walkthrough" class="guide-action primary" data-i18n="popup.replayWalkthrough"></button>
+      <button id="open-powerteacher-guide" class="guide-action" data-i18n="popup.powerTeacherGuide"></button>
+      <div id="walkthrough-summary" hidden aria-live="polite">
+        <p class="note" data-i18n="popup.walkthroughProgress"></p>
+        <div class="setting-row"><span data-i18n="messageOnboarding.newsfeedChoice"></span><output id="walkthrough-newsfeed-status"></output></div>
+        <div class="setting-row"><span data-i18n="messageOnboarding.messagesChoice"></span><output id="walkthrough-messages-status"></output></div>
+        <div class="setting-row"><span data-i18n="messageOnboarding.navigationChoice"></span><output id="walkthrough-navigation-status"></output></div>
+      </div>
+    </section>
+    <section aria-labelledby="guide-title">
+      <div class="section-heading"><h2 id="guide-title" data-i18n="popup.quickGuide"></h2><button id="open-help" class="text-button" data-i18n="popup.openHelp"></button></div>
+      <label class="setting-row" for="contextual-help"><span data-i18n="popup.pageHelp"></span><input id="contextual-help" type="checkbox"></label>
+      <label class="setting-row" for="walkthroughs"><span data-i18n="popup.guides"></span><input id="walkthroughs" type="checkbox"></label>
+    </section>
+    <section aria-labelledby="language-title">
+      <h2 id="language-title"><label for="ui-language" data-i18n="settings.language"></label></h2>
+      <select id="ui-language">
+        <option value="en" data-i18n="language.english"></option>
+        <option value="vi" data-i18n="language.vietnamese"></option>
+      </select>
+      <p class="note" data-i18n="settings.languageHint"></p>
+    </section>
+    <section aria-labelledby="names-title">
+      <h2 id="names-title"><label for="name-display-mode" data-i18n="popup.nameDisplay"></label></h2>
+      <select id="name-display-mode">
+        <option value="auto" data-i18n="popup.nameAuto"></option>
+        <option value="native" data-i18n="popup.nameNative"></option>
+        <option value="legacy-normalized" data-i18n="popup.nameLegacy"></option>
+      </select>
+      <p class="note" data-i18n="popup.nameNote"></p>
+    </section>
+    <p id="status" role="status" aria-live="polite"></p>
+  </main>
+  <footer class="copyright-notice" aria-label="Copyright notice" data-i18n-aria-label="popup.copyrightAria">
+    <span data-i18n="popup.copyrightNotice">© 2026 A.I MY. All rights reserved.</span>
+    <span data-i18n="popup.internalSchoolUse">For authorized educational use.</span>
+  </footer>
+  <script src="../platform/browser/i18n.js"></script>
+  <script src="../state/identity/identity.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+#psqm-integration-bridge-cue {
+  position: fixed;
+  right: 24px;
+  bottom: 88px;
+  z-index: 2147483000;
+  width: min(360px, calc(100vw - 32px));
+  box-sizing: border-box;
+  padding: 16px 18px;
+  border: 1px solid #b9c9d9;
+  border-radius: 12px;
+  background: #fff;
+  color: #203146;
+  box-shadow: 0 8px 24px rgba(20, 44, 68, .18);
+  font: 15px/1.45 Arial, sans-serif;
+}
+
+#psqm-integration-bridge-cue .psqm-integration-bridge-title {
+  margin: 0 32px 6px 0;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+#psqm-integration-bridge-cue .psqm-integration-bridge-body {
+  margin: 0;
+}
+
+#psqm-integration-bridge-cue .psqm-integration-bridge-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 0;
+  border-radius: 4px;
+  padding: 5px;
+  background: transparent;
+  color: #245581;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+#psqm-integration-bridge-cue .psqm-integration-bridge-close:focus-visible {
+  outline: 2px solid #0875bf;
+  outline-offset: 2px;
+}
+
+.psqm-integration-bridge-launcher {
+  outline: 4px solid #fff !important;
+  outline-offset: 4px !important;
+  border-radius: 6px;
+  animation: psqm-integration-bridge-grid-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes psqm-integration-bridge-grid-pulse {
+  0%, 100% { box-shadow: 0 0 0 5px rgba(8, 117, 191, .9), 0 0 0 9px rgba(255, 255, 255, .85); }
+  50% { box-shadow: 0 0 0 9px rgba(8, 117, 191, .65), 0 0 0 16px rgba(255, 255, 255, 0); }
+}
+
+.psqm-integration-bridge-tile {
+  outline: 3px solid #0875bf !important;
+  outline-offset: 3px !important;
+  border-radius: 6px;
+  animation: psqm-integration-bridge-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes psqm-integration-bridge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(8, 117, 191, .35); }
+  50% { box-shadow: 0 0 0 7px rgba(8, 117, 191, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .psqm-integration-bridge-launcher { animation: none !important; box-shadow: 0 0 0 5px #0875bf, 0 0 0 9px #fff !important; }
+  .psqm-integration-bridge-tile { animation: none !important; }
+}

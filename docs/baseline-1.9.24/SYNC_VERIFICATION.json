@@ -1,0 +1,28 @@
+{
+  "runtime_files": 74,
+  "manifest_references_resolved": 72,
+  "javascript_syntax_pass": 51,
+  "runtime_byte_parity": true,
+  "tests": [
+    {
+      "test": "test_fix20_perf_probe.js",
+      "exit_code": 0,
+      "output": "PASS testMeasureModuleSemantics\nPASS testThresholdsAndLoggerIsolation\nPASS testSharedScanOrderAndSyncExecution\nPASS testBlockedOnboardingOrder\nPASS testFullScanThresholdWithSmallModules\nPASS testModuleWarningAndExceptionPropagation\nPASS testObserverAndSchedulerRemainUnchanged\nPASS 7/7 FIX20 perf-probe tests\n",
+      "stderr": ""
+    },
+    {
+      "test": "test_sis_liveness_performance.js",
+      "exit_code": 0,
+      "output": "{\n  \"suite\": \"SIS liveness performance budget\",\n  \"status\": \"PASS\",\n  \"guard\": {\n    \"iterations\": 10000,\n    \"triggerCount\": 30000,\n    \"durationMs\": 5.662772,\n    \"initCalls\": 1,\n    \"intervalsCreated\": 1,\n    \"intervalMs\": 60000\n  },\n  \"runtime\": {\n    \"concurrentCalls\": 1000,\n    \"observerStarts\": 1,\n    \"intervalStarts\": 1,\n    \"listenerAdds\": 4\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "test_sis_vietnamese_name_display.js",
+      "exit_code": 0,
+      "output": "SIS Vietnamese-name merge: PASS\n",
+      "stderr": ""
+    }
+  ],
+  "browser_regressions": "Not rerun: Python Playwright unavailable",
+  "authenticated_live_test": "Not rerun; release handoff reports live-pass for now"
+}

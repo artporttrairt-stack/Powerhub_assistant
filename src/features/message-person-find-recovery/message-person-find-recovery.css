@@ -1,0 +1,83 @@
+#psqm-message-person-find-recovery {
+  box-sizing: border-box;
+  margin: 8px 0;
+  padding: 10px 12px;
+  max-width: 420px;
+  border: 1px solid rgba(30, 41, 59, 0.2);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
+  font: inherit;
+  color: inherit;
+  z-index: 2147482500;
+}
+
+#psqm-message-person-find-recovery .psqm-message-person-find-recovery-title {
+  display: block;
+  margin: 0 0 4px;
+}
+
+#psqm-message-person-find-recovery .psqm-message-person-find-recovery-body {
+  margin: 0;
+  line-height: 1.4;
+}
+
+#psqm-message-person-find-recovery .psqm-message-person-find-recovery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+#psqm-message-person-find-recovery button {
+  min-height: 34px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* The target class is a JavaScript marker only. The visible cue is a
+   body-level fixed overlay so native navigation overflow cannot clip it into
+   a single line, and the target keeps its own keyboard-focus outline. */
+
+.psqm-message-person-find-recovery-nav-cue-box[hidden] {
+  display: none !important;
+}
+
+.psqm-message-person-find-recovery-nav-cue-box {
+  position: fixed !important;
+  box-sizing: border-box !important;
+  z-index: 2147483646 !important;
+  pointer-events: none !important;
+  border: 3px solid #2563eb !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  opacity: 0.9;
+  box-shadow:
+    0 0 0 0 rgba(37, 99, 235, 0.48),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.92);
+  animation: psqm-message-person-find-recovery-box-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes psqm-message-person-find-recovery-box-pulse {
+  0%, 100% {
+    opacity: 0.82;
+    box-shadow:
+      0 0 0 0 rgba(37, 99, 235, 0.48),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.92);
+  }
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 7px rgba(37, 99, 235, 0),
+      inset 0 0 0 1px rgba(255, 255, 255, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .psqm-message-person-find-recovery-nav-cue-box {
+    animation: none;
+    opacity: 1;
+  }
+}

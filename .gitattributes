@@ -1,2 +1,8 @@
-# Auto detect text files and perform LF normalization
+# Preserve historical normalization; pin release payload bytes on every platform.
 * text=auto
+manifest.json -text
+src/** -text
+sis/** -text
+assets/** -text
+LICENSE.txt -text
+NOTICE.txt -text

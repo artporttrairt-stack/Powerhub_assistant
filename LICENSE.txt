@@ -1,0 +1,15 @@
+Copyright (c) 2026 A.I MY. All rights reserved.
+
+PRODUCTION EDUCATIONAL USE LICENSE NOTICE
+
+This software and its accompanying materials are owned by A.I MY.
+
+This is a production browser extension intended for authorized educational and administrative use by teachers and staff at supported educational institutions.
+
+A.I MY grants each authorized user or educational organization that obtains this software through an official distribution channel a limited, non-exclusive, non-transferable license to install and use the software for authorized educational and administrative purposes.
+
+Distribution of this extension by A.I MY through an official extension marketplace or another distribution channel expressly authorized by A.I MY is permitted. Unless A.I MY gives prior written permission, users and third parties may not sell, sublicense, redistribute, republish, or transfer the extension package, source code, branding, or derivative packages outside an authorized distribution channel.
+
+This license does not transfer ownership of the software, source code, branding, or other intellectual property rights.
+
+No warranty is provided except where required by applicable law.

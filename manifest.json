@@ -1,30 +1,34 @@
 {
   "manifest_version": 3,
-  "name": "PowerSchool Quick Message",
-  "description": "Put CAP, CAPI, and CEP class codes first, add display-only nicknames, and preserve native PowerSchool identity.",
-  "version": "1.8.13",
+  "name": "Hub Assistant Expanded",
+  "description": "Teacher-led guidance across MyPowerHub, PowerSchool SIS Start Page, and PowerTeacher Pro.",
+  "version": "1.9.24",
+  "version_name": "1.9.24",
   "minimum_chrome_version": "102",
   "permissions": [
-    "notifications",
     "storage"
   ],
   "host_permissions": [
     "https://vas.educator.powerschool.com/*"
   ],
   "action": {
-    "default_title": "PowerSchool Quick Message",
-    "default_popup": "popup.html",
+    "default_title": "Hub Assistant Expanded",
+    "default_popup": "src/popup/popup.html",
     "default_icon": {
-      "48": "icon48.png",
-      "128": "icon128.png"
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
     }
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/background/background.js"
   },
   "icons": {
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128-store.png"
   },
   "content_scripts": [
     {
@@ -32,12 +36,92 @@
         "https://vas.educator.powerschool.com/*"
       ],
       "js": [
-        "content.js"
+        "src/platform/browser/i18n.js",
+        "src/platform/powerhub/native-language-sync.js",
+        "src/features/language-intro/language-intro-copy.js",
+        "src/features/language-intro/language-intro-presenter.js",
+        "src/features/language-intro/language-intro-state.js",
+        "src/features/language-intro/language-intro-controller.js",
+        "src/features/language-intro/language-intro-core.js",
+        "src/platform/powerhub/language-intro-hub-adapter.js",
+        "src/features/language-intro/language-intro.js",
+        "src/features/onboarding/onboarding-progress.js",
+        "src/features/tour-resume/tour-resume-state.js",
+        "src/features/wait-chatter/wait-chatter.js",
+        "src/features/session-timeout/session-timeout-keeper.js",
+        "src/state/identity/identity.js",
+        "src/features/message-mode-default/message-mode-default.js",
+        "src/platform/powerhub/hub-ui-adapter.js",
+        "src/features/message-person-find-recovery/message-person-find-recovery-core.js",
+        "src/platform/powerhub/message-person-find-recovery-adapter.js",
+        "src/features/message-person-find-recovery/message-person-find-recovery.js",
+        "src/features/guidance/guide-registry.js",
+        "src/features/guidance/guides/newsfeed-guides.js",
+        "src/features/guidance/guides/message-guides.js",
+        "src/features/guidance/guides/group-chat-guides.js",
+        "src/features/walkthrough/walkthrough.js",
+        "src/features/conversation-opening/conversation-opening.js",
+        "src/features/message-information/message-information-pane-guide.js",
+        "src/features/message-onboarding/message-onboarding.js",
+        "src/features/contextual-help/context-help.js",
+        "src/features/newsfeed/newsfeed-readiness.js",
+        "src/features/communication-language-warning/communication-language-warning.js",
+        "src/features/integration-bridge/integration-bridge-core.js",
+        "src/features/integration-bridge/integration-bridge.js",
+        "src/core/runtime/content-runtime.js",
+        "src/core/bootstrap/content.js"
       ],
       "css": [
-        "styles.css"
+        "src/features/language-intro/robot-presenter.css",
+        "src/features/language-intro/language-intro.css",
+        "src/core/runtime/content-runtime.css",
+        "src/features/message-person-find-recovery/message-person-find-recovery.css",
+        "src/features/walkthrough/guide.css",
+        "src/features/message-mode-default/message-mode-default.css",
+        "src/features/newsfeed/newsfeed-readiness.css",
+        "src/features/communication-language-warning/communication-language-warning.css",
+        "src/features/message-onboarding/message-onboarding.css",
+        "src/features/message-information/message-information-pane-guide.css",
+        "src/features/integration-bridge/integration-bridge.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://vas.powerschool.com/*"
+      ],
+      "js": [
+        "sis/src/onboarding-policy.js",
+        "sis/src/tour-config.js",
+        "sis/src/grade-entry-handoff.js",
+        "sis/src/powerteacher-locale.js",
+        "sis/src/powerteacher-dom-contract.js",
+        "sis/src/powerteacher-display-settings.js",
+        "sis/src/student-name-preference.js",
+        "sis/src/powerteacher-native-prerequisite-verifier.js",
+        "sis/src/standalone-display-settings-onboarding.js",
+        "sis/src/powerteacher-surface.js",
+        "sis/src/powerteacher-lifecycle.js",
+        "sis/src/sis-vietnamese-name-display.js",
+        "sis/src/powerteacher-assistant-launcher.js",
+        "sis/src/content.js",
+        "sis/src/powerteacher-standalone-bootstrap.js"
+      ],
+      "css": [
+        "sis/src/tour.css"
       ],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/robot-assistant.png"
+      ],
+      "matches": [
+        "https://vas.educator.powerschool.com/*"
+      ]
+    }
+  ],
+  "short_name": "Hub Assist"
 }

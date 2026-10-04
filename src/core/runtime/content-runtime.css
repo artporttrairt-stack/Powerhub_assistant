@@ -53,56 +53,6 @@
   text-decoration: none !important;
 }
 
-.psqm-nickname-row {
-  position: relative !important;
-  padding-right: 32px !important;
-}
-
-.psqm-direct-row.psqm-nickname-row {
-  padding-right: 66px !important;
-}
-
-.psqm-nickname-edit {
-  display: inline-flex !important;
-  width: 24px !important;
-  height: 24px !important;
-  padding: 0 !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border: 1px solid transparent !important;
-  border-radius: 4px !important;
-  background: transparent !important;
-  color: #59666e !important;
-  cursor: pointer !important;
-  font: 600 16px/1 "Segoe UI Symbol", "Segoe UI", sans-serif !important;
-}
-
-.psqm-nickname-row > .psqm-nickname-edit {
-  position: absolute !important;
-  top: 50% !important;
-  right: 4px !important;
-  z-index: 3 !important;
-  transform: translateY(-50%) !important;
-}
-
-.psqm-direct-row > .psqm-nickname-edit,
-.psqm-group-chat-member-row > .psqm-nickname-edit {
-  right: 37px !important;
-}
-
-.psqm-nickname-edit:hover,
-.psqm-nickname-edit:focus-visible,
-.psqm-nickname-edit.psqm-nickname-edit-active {
-  border-color: #8da8ce !important;
-  background: #eef5ff !important;
-  color: #0759c7 !important;
-}
-
-.psqm-nickname-edit:focus-visible {
-  outline: 2px solid #2563eb !important;
-  outline-offset: 1px !important;
-}
-
 .psqm-direct-add:hover {
   border-color: #0759c7 !important;
   background: #eef5ff !important;
@@ -152,6 +102,12 @@
 .psqm-toast-error {
   border-color: #dc2626;
   color: #991b1b;
+}
+
+.psqm-recipient-suggested {
+  outline: 3px solid #2563eb !important;
+  outline-offset: -3px !important;
+  background: #eff6ff !important;
 }
 
 .psqm-student-class-detail {
@@ -269,16 +225,10 @@
   padding: 3px 8px 3px 10px !important;
   border-bottom: 1px solid #d7dce0 !important;
   align-items: center !important;
-  grid-template-columns: minmax(0, 1fr) minmax(86px, 128px) 28px 38px !important;
+  grid-template-columns: minmax(0, 1fr) minmax(86px, 128px) 38px !important;
   column-gap: 8px !important;
 }
 
-.psqm-group-chat-aggregate-nickname {
-  display: inline-flex !important;
-  width: 28px !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
 
 .psqm-group-chat-aggregate-name,
 .psqm-group-chat-aggregate-role {
@@ -352,3 +302,221 @@
     padding-block: 2px !important;
   }
 }
+
+/* Manual Newsfeed title helper: inline, bounded, and dormant until the teacher opens it. */
+.psqm-post-title-helper {
+  box-sizing: border-box;
+  position: static !important;
+  inset: auto !important;
+  float: none !important;
+  clear: both;
+  transform: none !important;
+  z-index: auto !important;
+  display: block;
+  width: min(100%, 620px);
+  max-width: 100%;
+  margin: 8px 0 12px;
+  font-family: inherit;
+}
+
+.psqm-post-title-helper *,
+.psqm-post-title-helper *::before,
+.psqm-post-title-helper *::after {
+  box-sizing: border-box;
+}
+
+.psqm-post-title-helper__toggle,
+.psqm-post-title-helper__insert,
+.psqm-post-title-helper__close {
+  min-height: 34px;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.psqm-post-title-helper__toggle {
+  background: transparent;
+}
+
+.psqm-post-title-helper__panel {
+  margin-top: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  border-radius: 8px;
+  padding: 12px;
+  background: Canvas;
+  color: CanvasText;
+}
+
+.psqm-post-title-helper__heading {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.psqm-post-title-helper__hint {
+  margin: 0 0 10px;
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+
+.psqm-post-title-helper__fields {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.8fr) minmax(180px, 1.6fr);
+  gap: 8px 10px;
+}
+
+.psqm-post-title-helper__field {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.psqm-post-title-helper__control {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: Field;
+  color: FieldText;
+  font: inherit;
+  font-weight: 400;
+}
+
+.psqm-post-title-helper__preview-label {
+  margin-top: 10px;
+  font-size: 0.85em;
+  font-weight: 700;
+}
+
+.psqm-post-title-helper__preview {
+  margin-top: 4px;
+  min-height: 38px;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.05);
+  overflow-wrap: anywhere;
+}
+
+.psqm-post-title-helper__preview--empty {
+  opacity: 0.7;
+}
+
+.psqm-post-title-helper__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.psqm-post-title-helper__insert:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+@media (max-width: 640px) {
+  .psqm-post-title-helper__fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .psqm-post-title-helper *,
+  .psqm-post-title-helper *::before,
+  .psqm-post-title-helper *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* POST-TITLE-FORM-03: small layout polish for the collapsed Build title row. */
+#compose-view-layout #input-field-compose_title {
+  width: min(420px, 62vw) !important;
+  min-width: min(340px, 62vw);
+  max-width: 100% !important;
+}
+
+.psqm-post-title-helper__toggle {
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  #compose-view-layout #input-field-compose_title {
+    width: 100% !important;
+    min-width: 0;
+  }
+
+  .psqm-post-title-helper__toggle {
+    transform: none;
+  }
+}
+
+/* WAIT-CHAT-04: prominent centered loading chatter.
+   This remains non-interactive and only exists during a verified slow-loading session. */
+.psqm-wait-chatter {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: min(560px, calc(100vw - 40px));
+  box-sizing: border-box;
+  padding: 22px 26px;
+  border: 1px solid rgba(31, 41, 55, 0.18);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.97);
+  color: #1f2937;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.18);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2147483638;
+  pointer-events: none;
+}
+
+.psqm-wait-chatter__message {
+  display: grid;
+  gap: 8px;
+}
+
+.psqm-wait-chatter__title,
+.psqm-wait-chatter__body {
+  display: block;
+}
+
+.psqm-wait-chatter__title {
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 750;
+}
+
+.psqm-wait-chatter__body {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .psqm-wait-chatter {
+    width: calc(100vw - 24px);
+    padding: 18px 20px;
+    border-radius: 16px;
+  }
+
+  .psqm-wait-chatter__title {
+    font-size: 18px;
+  }
+
+  .psqm-wait-chatter__body {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .psqm-wait-chatter__message {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+

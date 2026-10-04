@@ -1,0 +1,124 @@
+#psqm-message-onboarding-card {
+  position: fixed;
+  z-index: 2147483642;
+  width: min(380px, calc(100vw - 28px));
+  max-height: min(55vh, 430px);
+  overflow: auto;
+  padding: 14px;
+  border: 1px solid #b3becb;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgb(23 32 51 / 18%);
+  color: #172033;
+  font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+#psqm-message-onboarding-card,
+#psqm-message-onboarding-card * {
+  box-sizing: border-box;
+}
+
+.psqm-message-onboarding__header {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+
+.psqm-message-onboarding__header h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.psqm-message-onboarding__body {
+  margin: 9px 0 0;
+}
+
+.psqm-message-onboarding__note {
+  margin: 10px 0 0;
+  color: #344054;
+  font-size: 13px;
+}
+
+.psqm-message-onboarding__close {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #526075;
+  cursor: pointer;
+  font: 20px/1 system-ui, sans-serif;
+}
+
+.psqm-message-onboarding__close:hover {
+  background: #edf4fd;
+}
+
+.psqm-message-onboarding__actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.psqm-message-onboarding__actions button {
+  min-height: 38px;
+  padding: 8px 11px;
+  border: 1px solid #9aa9ba;
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.psqm-message-onboarding__primary {
+  background: #0759c7;
+  border-color: #0759c7 !important;
+  color: #fff;
+}
+
+.psqm-message-onboarding__secondary {
+  background: #fff;
+  color: #172033;
+}
+
+#psqm-message-onboarding-spotlight {
+  position: fixed;
+  z-index: 2147483640;
+  border: 3px solid #0759c7;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px rgb(7 89 199 / 12%);
+  pointer-events: none;
+  animation: psqm-message-onboarding-pulse 900ms ease-out 2;
+}
+
+@keyframes psqm-message-onboarding-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(7 89 199 / 34%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgb(7 89 199 / 0%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgb(7 89 199 / 0%);
+  }
+}
+
+@media (max-width: 640px) {
+  #psqm-message-onboarding-card {
+    left: 14px !important;
+    right: 14px !important;
+    width: auto;
+    max-height: 48vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #psqm-message-onboarding-spotlight {
+    animation: none;
+  }
+}

@@ -1,0 +1,9 @@
+Hub Assistant Expanded
+Copyright (c) 2026 A.I MY. All rights reserved.
+
+This is a production browser extension for authorized educational use. See
+LICENSE.txt for the applicable license terms.
+
+PowerSchool and other third-party product names identify services with which
+this extension is designed to work. This notice makes no ownership claim over
+those services, their content, or their marks.

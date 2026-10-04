@@ -1,0 +1,23 @@
+{
+  "source_baseline_zip": "Hub_Assistant_FIX22_4_POWERTEACHER_PREREQUISITE_PRISTINE_SAVE.zip",
+  "source_baseline_sha256": "d709b684437ad7c007ca1336331719ee4e9234b755a625bb40c78e4f7c1d8e3b",
+  "preexisting_runtime_files_checked": 68,
+  "preexisting_runtime_files_changed": [],
+  "allowed_release_additions": [
+    "assets/icons/icon16.png",
+    "assets/icons/icon32.png",
+    "assets/icons/icon128-store.png"
+  ],
+  "manifest_changes": [
+    "short_name added",
+    "version_name normalized to 1.9.24",
+    "16/32 icons registered",
+    "store-padded 128 icon registered under icons[128]"
+  ],
+  "store_icon_alpha_bbox": [
+    16,
+    16,
+    112,
+    112
+  ]
+}

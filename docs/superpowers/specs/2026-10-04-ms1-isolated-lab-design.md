@@ -128,7 +128,46 @@ derived journey-map / implementation notes
 
 Journey maps and HAR-derived metadata are implementation evidence, not academic authority.
 
-### 2.4 Teacher Assessment Grade is a different workflow
+### 2.4 Language-system boundary: Hub locale vs MS1 VI assist
+
+There are **two independent language systems** and they must never be coupled.
+
+#### A. Hub UI locale
+
+The existing Hub Assistant language/native-language system owns generic extension chrome such as global onboarding or generic interface labels.
+
+This MS1 design does not redefine that system.
+
+The MS1 module must not read or write the global Hub language setting merely to decide which academic rubric language to show.
+
+#### B. MS1 academic assist language
+
+MS1 academic content is **English-first by design** because the Cambridge reporting workflow is completed in English.
+
+This does **not** mean the academic subject must be English. Maths, Science, or another Cambridge subject may still use the same English-first MS1 rubric. The rule concerns the reporting/content language, not the subject identity.
+
+Vietnamese is an optional fatigue-relief layer for local Cambridge teachers who may want help interpreting English rubric content while completing many reports.
+
+Therefore:
+
+- default MS1 academic content language = `EN`;
+- Vietnamese is not shown by default;
+- Vietnamese is never auto-selected from browser language;
+- Vietnamese is never auto-selected from Hub's global/native UI locale;
+- Vietnamese is never treated as the preferred or primary display language;
+- a small explicit `VI` control reveals/switches the MS1 support content to Vietnamese only when the teacher asks for it;
+- switching MS1 content to `VI` does not change Hub's global UI language;
+- changing Hub's global UI language does not change the MS1 academic assist language;
+- the MS1 assist-language choice is ephemeral to the active MS1 help context unless a later approved spec explicitly introduces persistence.
+
+Source-integrity rule:
+
+- the canonical official criterion remains the English official source;
+- when `VI` assist mode is active, source-backed Vietnamese explanatory/interpretive content may replace the visible support layers;
+- do not label an interpretive Vietnamese rendering as an official translation unless an authoritative translated source explicitly supports that claim;
+- where no source-backed Vietnamese support exists, keep the English source text rather than inventing a translation.
+
+### 2.5 Teacher Assessment Grade is a different workflow
 
 Teacher Assessment Grade (TA Grade) must not be treated as the MS1 eight-strand rubric.
 
@@ -199,8 +238,8 @@ extension/
         │   ├── classroom-evidence.js
         │   ├── observation-checklists.js
         │   ├── comparisons.js
-        │   ├── copy.en.js
-        │   ├── copy.vi.js
+        │   ├── assist-copy.en.js
+        │   ├── assist-copy.vi.js
         │   └── subject-examples/
         │       ├── english.js
         │       ├── maths.js
@@ -819,7 +858,41 @@ BE ↔ WB
 
 The purpose is to distinguish nearby judgement bands, not to recommend a band.
 
-### 11.6 Subject overlays
+### 11.6 MS1 language assist control
+
+The Score Inspector contains one small, visually secondary language control for the academic support content.
+
+Default:
+
+`EN`
+
+Visible control:
+
+`VI`
+
+Behavior:
+
+- English MS1 content is shown on open;
+- Vietnamese content remains hidden;
+- pressing `VI` switches only the MS1 academic support layers to Vietnamese;
+- after switching, the control may display `EN` as the return action;
+- the control must be subtle and secondary to the rubric/level controls;
+- it must not become a primary onboarding choice;
+- it must not trigger global Hub language changes;
+- it must not be triggered by the current Hub/native language automatically.
+
+In `VI` mode, prioritize Vietnamese for:
+
+- plain-language explanation;
+- classroom evidence;
+- observation questions;
+- source-backed interpretive examples.
+
+The canonical English official criterion remains the authority. A Vietnamese support rendering may accompany or replace the visible explanatory layer, but it must not be mislabeled as official unless the supplied source explicitly provides an authoritative official translation.
+
+This `VI` assist exists for local Cambridge teachers working through English-language reporting content repeatedly; it is not a general localization mechanism for Hub Assistant.
+
+### 11.7 Subject overlays
 
 Only source-backed subject examples are allowed.
 
@@ -837,7 +910,7 @@ Unknown/unmapped subjects:
 - retain generic official guidance;
 - do not borrow an example from another subject.
 
-### 11.7 Teacher decision lock
+### 11.8 Teacher decision lock
 
 Always preserve language equivalent to:
 
@@ -1078,6 +1151,12 @@ Tests must cover:
 - official source ID on every official cell;
 - every derived item traces to official parent;
 - no thresholds/formulas/recommendation language;
+- English academic content is the default;
+- MS1 `VI` assist state is independent from Hub/global UI locale;
+- Hub/global locale changes do not auto-switch MS1 content language;
+- `VI` content appears only after explicit teacher action;
+- returning to `EN` affects only MS1 support content;
+- no unsupported Vietnamese translation is invented;
 - subject overlay optional;
 - unknown subject does not leak another subject example;
 - adjacent comparison valid;
@@ -1198,11 +1277,13 @@ The following are deliberate design decisions, not placeholders:
 13. Complete 8-strand context is required before academic MS1 guidance.
 14. TA Grade / TA Score / Ranking / LSPC / Unit Quiz are not the 8-strand MS1 rubric.
 15. Official source wins over bilingual/derived material.
-16. English/Maths/Science examples are optional interpretive overlays, not cut-offs.
-17. Hub never recommends or writes a final academic level.
-18. Unknown/ambiguous/stale context fails closed.
-19. No broad observer or polling is added.
-20. Production integration is a separate future design/plan.
+16. English is the default MS1 academic content language.
+17. `VI` is an explicit, secondary MS1-only assistance control for local Cambridge teachers; it is not linked to Hub's global/native language.
+18. English/Maths/Science examples are optional interpretive overlays, not cut-offs.
+19. Hub never recommends or writes a final academic level.
+20. Unknown/ambiguous/stale context fails closed.
+21. No broad observer or polling is added.
+22. Production integration is a separate future design/plan.
 
 ---
 
@@ -1216,6 +1297,7 @@ Before approving G0 inspection, review whether this spec correctly captures:
 - Guide me vs Help me from here;
 - the contextual Score Inspector;
 - the strict source hierarchy;
+- the separation between Hub global/native language and MS1's explicit English-first / optional `VI` assist;
 - the no-auto-grade teacher-control rule;
 - the 8-strand gate;
 - the isolation from existing Phase 1/production behavior.

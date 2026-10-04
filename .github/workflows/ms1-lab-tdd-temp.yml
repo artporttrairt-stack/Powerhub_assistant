@@ -31,3 +31,10 @@ jobs:
           cat dist/ms1-lab/SHA256SUMS.txt
           echo "=== SHA256SUMS DIGEST ==="
           sha256sum dist/ms1-lab/SHA256SUMS.txt
+      - name: Upload isolated MS1 Lab artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ms1-lab-0.1.0
+          path: dist/ms1-lab/
+          if-no-files-found: error
+          retention-days: 14

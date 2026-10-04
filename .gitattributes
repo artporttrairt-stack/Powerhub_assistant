@@ -1,2 +1,3 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Auto detect text files and force LF working-tree checkout on every platform.
+# Baseline integrity tests hash exact audited bytes, so CRLF checkout is unsafe.
+* text=auto eol=lf

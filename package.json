@@ -1,0 +1,8 @@
+{
+  "name": "hub-assistant-phase0-dev",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/phase0/*.test.js",
+    "verify:phase0": "node scripts/verify-phase0.mjs"
+  }
+}

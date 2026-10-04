@@ -9,10 +9,11 @@
     "storage"
   ],
   "host_permissions": [
-    "https://vas.educator.powerschool.com/*"
+    "https://vas.educator.powerschool.com/*",
+    "https://vas.powerschool.com/teachers/*"
   ],
   "action": {
-    "default_title": "Hub assistant — Pilot",
+    "default_title": "Hub assistant \u2014 Pilot",
     "default_popup": "src/popup/popup.html",
     "default_icon": {
       "48": "assets/icons/icon48.png",
@@ -71,6 +72,21 @@
         "src/features/communication-language-warning/communication-language-warning.css",
         "src/features/message-onboarding/message-onboarding.css",
         "src/features/message-information/message-information-pane-guide.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://vas.powerschool.com/teachers/*"
+      ],
+      "js": [
+        "src/platform/powerteacher/teacher-context.js",
+        "src/features/teacher-support/guidance/pack-registry.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/applicability.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/sources.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/pack.js",
+        "src/features/teacher-support/runtime/support-lifecycle.js",
+        "src/core/bootstrap/teacher-support-content.js"
       ],
       "run_at": "document_idle"
     }

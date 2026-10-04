@@ -147,6 +147,46 @@ Selected artifact hashes:
 - source commit: `80c889cafb3217dfb5b024e3097aef77f3fdea5a`;
 - Lab version: `0.1.0`.
 
+## Downloadable Development Lab Artifact
+
+A development-only unpacked-Lab artifact was produced after the final deterministic implementation fix pass.
+
+- GitHub Actions run: `37243708757`
+- build source commit: `7cbf02c4a2a4603cb50e4690ee242f5ae29e6fda`
+- artifact name: `ms1-lab-0.1.0`
+- artifact ID: `11318371796`
+- uploaded artifact archive digest: `sha256:b6dcd919ad76d119749cd075e8b4a8079dc4938847a8ec7720457a1574584abd`
+- `SHA256SUMS.txt` digest inside that build: `d76b32df68fa8d6f4b8e0e714055bebc1523eb8b75a69b6e8f32976e266b38f4`
+- Lab version: `0.1.0`
+
+The build source differs from implementation checkpoint `80c889c...` only by handoff/temporary CI bookkeeping; canonical Teacher Support module bytes remain the verified implementation bytes. The temporary CI workflow used to execute and upload the artifact was removed afterward at cleanup commit `574e393236588abd349bee12963177c3ac792ea7`.
+
+This artifact is for authorized unpacked-development smoke testing only. It is not a Store package and must not be published as a production release.
+
+## Final Whole-Branch Review
+
+The execution harness exposed no subagent/reviewer dispatch tool, so the required final review was performed as a separate self-review pass and this limitation is explicit.
+
+Important findings found and fixed with RED -> GREEN coverage before the final verifier run:
+
+1. entry click now opens the pack-owned intro panel before any walkthrough/contextual guidance starts;
+2. the exact MS1 intro headline is pack-owned rather than hard-coded into generic runtime/UI;
+3. robot bounce now runs only on a closed-to-open panel transition rather than on every panel rerender;
+4. the floating panel/inspector now has an opaque readable card surface.
+
+Final verifier after those fixes:
+
+- run: `37243656041`
+- source commit: `80c889cafb3217dfb5b024e3097aef77f3fdea5a`
+- Phase 0: **38 / 38 PASS**
+- Teacher Support: **83 / 83 PASS**
+- new-source/test/tool syntax: **33 files PASS**
+- deterministic Lab build/checksum/protected-diff gates: **PASS**
+
+Deferred minor:
+
+- the inherited hover/focus small-scale and pointer press-compression microinteraction for the floating `?` is not separately implemented/tested. Visible keyboard focus, one-shot spring attention, finite motion, and reduced-motion handling are implemented. This is interaction polish only; it does not weaken the academic, privacy, native-action, lifecycle, or fail-closed safety gates.
+
 ## Protected Production State
 
 Verification confirms no change to:
@@ -190,6 +230,7 @@ Until this live sequence passes, production integration readiness remains **bloc
 ## Known Limitations
 
 - Live PowerTeacher smoke is pending because the current automation browser profile has no recorded authenticated PowerSchool session.
+- Floating-entry hover/press microinteraction polish remains deferred as documented in the final whole-branch review.
 - This branch validates the isolated Lab only; it does not migrate the protected Phase 0 production entrypoints.
 - The Lab uses explicit trusted pack selection and is not a production auto-activation mechanism.
 - No production version bump, Store packaging, merge, or rollout is included.

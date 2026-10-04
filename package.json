@@ -4,6 +4,8 @@
   "scripts": {
     "test": "node --test tests/phase0/*.test.js",
     "verify:phase0": "node scripts/verify-phase0.mjs",
-    "test:teacher-support": "node scripts/run-teacher-support-tests.mjs"
+    "test:teacher-support": "node scripts/run-teacher-support-tests.mjs",
+    "build:ms1-lab": "node tools/build-ms1-lab.mjs",
+    "verify:teacher-support": "node scripts/verify-teacher-support.mjs"
   }
 }

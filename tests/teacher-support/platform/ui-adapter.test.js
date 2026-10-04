@@ -77,7 +77,7 @@ function adapterFor({ document, origin = 'https://vas.powerschool.com', pathname
   });
 }
 
-function standardsDocument({ grids = [], filterVisible = false, headers = [], rowCells = [], inspector = null } = {}) {
+function standardsDocument({ grids = [], filterVisible = false, headers = [], rowCells = [], inspector = null, scoreChoices = [], allScoreButtons = null } = {}) {
   const standardsContainer = element({ text: 'Standards', visible: true });
   const grading = element({ text: 'Grading', visible: true, attrs: { 'aria-current': 'page' } });
   const standardsNav = element({ text: 'Standards', visible: true, attrs: { 'aria-current': 'page' } });
@@ -102,9 +102,11 @@ function standardsDocument({ grids = [], filterVisible = false, headers = [], ro
     '#hide-filter': filterToggle,
     '#simple-search-standard-final-grades': filterInput,
     '.course-name': course,
-    'body.score-inspector-score': inspector,
+    '#keypad-score': inspector,
   }, {
     '#standard-final-grades': grids,
+    '[id^="keypad-score-"][id$="-button"]': allScoreButtons || scoreChoices,
+    '[id^="keypad-score-"][id$="-button"]:not(#keypad-score-enter-button)': scoreChoices,
   });
 }
 
@@ -182,18 +184,34 @@ test('selected cell uses relative standard-column position and ignores absolute 
   assert.notEqual(selected.cellIndex, 1);
 });
 
-test('native inspector reports observed option codes without judging compatibility', () => {
+test('native inspector reports observed option codes from verified keypad score controls without judging compatibility', () => {
   const grid = element({ visible: true });
-  const options = ['EE', 'AE', 'ME', 'BE', 'WB'].map((code) => element({ text: code, attrs: { role: 'option' } }));
-  const inspector = element({
-    visible: true,
-    queryAll: { '[role="option"], [role="button"]': options },
-  });
-  const state = adapterFor({ document: standardsDocument({ grids: [grid], inspector }) }).readTeacherUiState();
+  const options = ['EE', 'AE', 'ME', 'BE', 'WB'].map((code) => element({ text: code, attrs: { role: 'button' } }));
+  const enter = element({ text: 'Enter', attrs: { role: 'button' } });
+  const inspector = element({ visible: true });
+  const state = adapterFor({
+    document: standardsDocument({
+      grids: [grid],
+      inspector,
+      scoreChoices: options,
+      allScoreButtons: [...options, enter],
+    }),
+  }).readTeacherUiState();
 
   assert.equal(state.nativeInspectorOpen, true);
   assert.deepEqual(state.scale.codes, ['EE', 'AE', 'ME', 'BE', 'WB']);
   assert.equal(Object.hasOwn(state.scale, 'verified'), false);
+});
+
+test('PowerTeacher contract uses only G0-verified generic keypad score selectors', () => {
+  const source = fs.readFileSync(CONTRACT_PATH, 'utf8');
+  assert.equal(source.includes('body.score-inspector-score'), false);
+  assert.match(source, /#keypad-score/);
+  assert.match(source, /\[id\^="keypad-score-"\]\[id\$="-button"\]/);
+  assert.match(source, /:not\(#keypad-score-enter-button\)/);
+  for (const token of ['keypad-score-EE-button', 'keypad-score-AE-button', 'keypad-score-ME-button', 'keypad-score-BE-button', 'keypad-score-WB-button']) {
+    assert.equal(source.includes(token), false, token);
+  }
 });
 
 test('generic platform source contains no MS1 academic classification policy', () => {

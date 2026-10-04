@@ -10,11 +10,13 @@
     official: Object.freeze({
       id: 'cam-primary-ms1-official',
       role: 'canonical',
+      authority: 'official',
       title: 'MS1 Report Teacher Guidance',
     }),
     interpretive: Object.freeze({
       id: 'cam-primary-ms1-interpretive',
       role: 'interpretive-example',
+      authority: 'interpretive',
       title: 'MS1 All Levels Complete Bilingual',
     }),
   });

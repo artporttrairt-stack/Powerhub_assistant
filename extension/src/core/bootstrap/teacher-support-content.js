@@ -1,1 +1,1 @@
-globalThis.PSQM.teacherSupportLifecycle.start();
+globalThis.PSQM.teacherSupportRuntime.start();

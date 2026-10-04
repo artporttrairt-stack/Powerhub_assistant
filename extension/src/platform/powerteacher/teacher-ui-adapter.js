@@ -81,6 +81,8 @@
     }
     const gear = items ? query(documentLike, items.standardsGear.selector) : null;
     const filter = items ? query(documentLike, items.filterInput.selector) : null;
+    const filterToggle = items && items.filterToggle ? query(documentLike, items.filterToggle.selector) : null;
+    const course = items && items.currentCourseLabel ? query(documentLike, items.currentCourseLabel.selector) : null;
 
     const gradingAvailable = Boolean(grading && isVisible(documentLike, grading));
     const standardsNavAvailable = Boolean(standardsNav && isVisible(documentLike, standardsNav));
@@ -107,13 +109,31 @@
     }
 
     let workflowMarkerPresent = UNKNOWN;
+    let workflowMarkerKey = null;
+    let workflowMarkerEvidence = [];
     if (grid) {
       const markerContract = items && items.ms1ResultMarker;
+      const required = markerContract && Array.isArray(markerContract.requiredSemanticIdentifiers)
+        ? markerContract.requiredSemanticIdentifiers
+        : [];
       const candidates = markerContract ? queryAll(grid, markerContract.candidateSelector) : [];
-      workflowMarkerPresent = candidates.some((candidate) => (
-        isVisible(documentLike, candidate)
-        && textOf(candidate).toUpperCase().includes(String(markerContract.semanticText || '').toUpperCase())
-      ));
+      const visibleText = candidates
+        .filter((candidate) => isVisible(documentLike, candidate))
+        .map((candidate) => textOf(candidate).trim())
+        .filter(Boolean);
+      const byUpper = new Map(visibleText.map((text) => [text.toUpperCase(), text]));
+      workflowMarkerEvidence = required
+        .filter((identifier) => byUpper.has(String(identifier).toUpperCase()))
+        .map((identifier) => byUpper.get(String(identifier).toUpperCase()));
+      if (required.length > 0 && workflowMarkerEvidence.length === required.length) {
+        workflowMarkerPresent = true;
+        workflowMarkerKey = 'ms1-strands';
+      } else if (workflowMarkerEvidence.length === 0) {
+        workflowMarkerPresent = false;
+      } else {
+        workflowMarkerPresent = UNKNOWN;
+        reasonCodes.push('workflow-marker-incomplete');
+      }
     }
 
     const body = documentLike && documentLike.body;
@@ -128,7 +148,12 @@
       settingsAvailable: Boolean(gear && isVisible(documentLike, gear)),
       filterVisible,
       filterQuery,
+      filterToggleAvailable: Boolean(filterToggle && isVisible(documentLike, filterToggle)),
+      filterToggleLabel: filterToggle && isVisible(documentLike, filterToggle) ? textOf(filterToggle) : null,
       workflowMarkerPresent,
+      workflowMarkerKey,
+      workflowMarkerEvidence: Object.freeze([...workflowMarkerEvidence]),
+      courseLabel: course && isVisible(documentLike, course) ? textOf(course) : UNKNOWN,
       supportMountAvailable,
       reasonCodes: Object.freeze(reasonCodes),
     });

@@ -1,0 +1,32 @@
+name: Temporary MS1 Lab TDD
+
+on:
+  push:
+    branches:
+      - agent/ms1-generic-engine-lab-20261005
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Existing Phase 0 tests
+        run: npm test
+      - name: Teacher Support tests when available
+        shell: bash
+        run: |
+          if node -e "const p=require('./package.json'); process.exit(p.scripts && p.scripts['test:teacher-support'] ? 0 : 1)"; then
+            npm run test:teacher-support
+          else
+            echo "test:teacher-support not added yet"
+          fi

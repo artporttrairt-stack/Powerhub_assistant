@@ -206,6 +206,7 @@ test('pack exposes immutable generic reference options for controller/runtime co
   assert.deepEqual(options.levelCodes, ['EE', 'AE', 'ME', 'BE', 'WB']);
   assert.deepEqual(options.assistLanguages, ['EN', 'VI']);
   assert.equal(options.defaultAssistLanguage, 'EN');
+  assert.equal(options.introTitle, 'Need help with MS1?');
   assert.equal(options.areas.length, 8);
   assert.deepEqual(options.areas[0], { id: 'academic', title: 'Academic Achievement' });
   assert.equal(Object.isFrozen(options), true);

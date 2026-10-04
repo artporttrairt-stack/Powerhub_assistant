@@ -22,6 +22,13 @@ jobs:
           node-version: '22'
       - name: Full Teacher Support verification and stress suite
         run: npm run verify:teacher-support
+      - name: Ten-run Teacher Support soak
+        shell: bash
+        run: |
+          for i in $(seq 1 10); do
+            echo "=== SOAK RUN $i/10 ==="
+            npm run test:teacher-support
+          done
       - name: Record artifact trace
         shell: bash
         run: |

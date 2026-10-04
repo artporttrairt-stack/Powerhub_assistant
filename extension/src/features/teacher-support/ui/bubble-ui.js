@@ -78,9 +78,20 @@
     function highlight(target) {
       mount();
       if (highlightNode) highlightNode.remove();
+      highlightNode = null;
+      if (!target) return null;
       highlightNode = documentLike.createElement('div');
       highlightNode.className = HIGHLIGHT_CLASS;
-      if (highlightNode.dataset) highlightNode.dataset.targetPresent = target ? 'true' : 'false';
+      if (highlightNode.dataset) highlightNode.dataset.targetPresent = 'true';
+      if (typeof target.getBoundingClientRect === 'function') {
+        const rect = target.getBoundingClientRect();
+        if (highlightNode.style) {
+          highlightNode.style.left = String(Math.max(0, rect.left - 4)) + 'px';
+          highlightNode.style.top = String(Math.max(0, rect.top - 4)) + 'px';
+          highlightNode.style.width = String(Math.max(0, rect.width + 8)) + 'px';
+          highlightNode.style.height = String(Math.max(0, rect.height + 8)) + 'px';
+        }
+      }
       rootNode.appendChild(highlightNode);
       return highlightNode;
     }

@@ -1,0 +1,62 @@
+{
+  "platform": {
+    "origin": "https://vas.powerschool.com",
+    "teacherPathPrefix": "/teachers/",
+    "routePath": "/classes/final_grades"
+  },
+  "standards": {
+    "gradingSelector": "#sidebar-charms-grading",
+    "standardsSelector": "#grading-standards-link",
+    "semanticContainerSelector": "#section-mega-menu",
+    "gridSelector": "#standard-final-grades",
+    "gearSelector": "#special-functions",
+    "verifiedByCompositeState": true,
+    "paginationAware": true
+  },
+  "filter": {
+    "toggleSelector": "#hide-filter",
+    "inputSelector": "#simple-search-standard-final-grades",
+    "visibleLabels": ["Show Filter", "Hide Filter"],
+    "query": "MS1",
+    "queryAloneIsEligibility": false
+  },
+  "currentPageHeaders": [
+    { "text": "MS1-Academic", "title": "MS1 - Academic Achievement", "standardPosition": 0 },
+    { "text": "MS1-Attitude", "title": "MS1 - Attitude Towards Learning", "standardPosition": 1 },
+    { "text": "MS1-Behaviour", "title": "MS1 - Behaviour and Personal Development", "standardPosition": 2 },
+    { "text": "MS1-Equipment", "title": "MS1 - Equipment and Resources", "standardPosition": 3 }
+  ],
+  "liveApprovedAliases": [
+    "MS1-Academic",
+    "MS1-Attitude",
+    "MS1-Behaviour",
+    "MS1-Equipment"
+  ],
+  "lookalikes": [
+    "MS1-TA-Grade",
+    "MS1-TA-Score",
+    "MS1-VN-Ranking",
+    "MS1-Unit1",
+    "MS1-LSPC"
+  ],
+  "selectedCell": {
+    "found": true,
+    "standardPosition": 3,
+    "semanticClasses": ["standard-col", "keypad-cell"],
+    "rawIdentityStored": false
+  },
+  "nativeScale": {
+    "codes": ["EE", "AE", "ME", "BE", "WB"],
+    "verified": true
+  },
+  "classSwitch": {
+    "routePathBefore": "/classes/final_grades",
+    "routePathAfter": "/classes/final_grades",
+    "courseLabelChanged": true,
+    "hashchangeFired": true,
+    "popstateFired": true,
+    "filterValuePersisted": "MS1",
+    "oldSelectedCellGone": true,
+    "nativeInspectorClosed": true
+  }
+}

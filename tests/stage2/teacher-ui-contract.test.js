@@ -68,7 +68,19 @@ test('verified selectors and state rules match the G0 live evidence exactly', ()
   assert.equal(items.ms1ResultMarker.scopeSelector, '#standard-final-grades');
   assert.equal(items.ms1ResultMarker.candidateSelector, 'th.standard-column-header.standard-col');
   assert.equal(items.ms1ResultMarker.semanticText, 'MS1');
-  assert.equal(items.ms1ResultMarker.minComputedVisibleMatches, 1);
+  assert.equal(items.ms1ResultMarker.minComputedVisibleMatches, 8);
+  assert.equal(items.ms1ResultMarker.maxComputedVisibleMatches, 8);
+  assert.deepEqual(items.ms1ResultMarker.requiredSemanticIdentifiers, [
+    'MS1-Academic',
+    'MS1-Attitude',
+    'MS1-Behaviour',
+    'MS1-Classwork',
+    'MS1-Communication',
+    'MS1-Collaboratively',
+    'MS1-Creativity',
+    'MS1-Equipment',
+  ]);
+  assert.equal(items.currentCourseLabel.selector, '.course-name');
   assert.equal(items.ms1ResultMarker.requiresStabilizationReread, true);
 
   assert.equal(items.supportMountHost.host, 'document.body');

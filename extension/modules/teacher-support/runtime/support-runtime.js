@@ -116,7 +116,15 @@
       if (!started) return;
 
       if (typeof intent === 'string') {
-        if (intent === 'open' || intent === 'guide' || intent === 'resume') {
+        if (intent === 'open') {
+          panelOpen = true;
+          quiet = false;
+          referenceMode = false;
+          renderIntro();
+          return;
+        }
+
+        if (intent === 'guide' || intent === 'resume') {
           panelOpen = true;
           quiet = false;
           referenceMode = false;
@@ -253,19 +261,44 @@
       routeListenersBound = false;
     }
 
-    function renderEntry() {
-      if (!entry) return;
-      const reducedMotion = Boolean(
+    function prefersReducedMotion() {
+      return Boolean(
         typeof window.matchMedia === 'function'
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches
       );
+    }
+
+    function renderEntry() {
+      if (!entry) return;
       entry.render({
         visible: true,
         attention: entryAttentionPending,
-        reducedMotion,
+        reducedMotion: prefersReducedMotion(),
         label: 'Teacher Support',
       });
       entryAttentionPending = false;
+    }
+
+    function renderIntro() {
+      ensureUi();
+      const options = getOptions() || {};
+      if (inspector) inspector.reset();
+      if (!panel) return;
+      panel.clearTargetHint();
+      panel.render({
+        open: true,
+        title: options.introTitle || 'Teacher Support',
+        message: '',
+        robotVisible: true,
+        reducedMotion: prefersReducedMotion(),
+        actions: [
+          { intent: 'guide', label: 'Guide me' },
+          { intent: 'resume', label: 'Help me from here' },
+          { intent: 'quiet', label: 'I know already' },
+          { intent: 'reference', label: 'Quick reference' },
+          { intent: 'close', label: 'Close' },
+        ],
+      });
     }
 
     function panelModel(result) {
@@ -283,6 +316,7 @@
         title: 'Teacher Support',
         message: viewModel.message || result && result.reason || '',
         robotVisible: true,
+        reducedMotion: prefersReducedMotion(),
         stepId: viewModel.stepId || null,
         targetKey: viewModel.targetKey || null,
         actions,

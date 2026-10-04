@@ -22,11 +22,12 @@ jobs:
           node-version: '22'
       - name: Existing Phase 0 tests
         run: npm test
-      - name: Teacher Support tests when available
+      - name: Teacher Support tests when present
         shell: bash
         run: |
-          if node -e "const p=require('./package.json'); process.exit(p.scripts && p.scripts['test:teacher-support'] ? 0 : 1)"; then
-            npm run test:teacher-support
+          mapfile -d '' tests < <(find tests/teacher-support -type f -name '*.test.js' -print0 2>/dev/null | sort -z)
+          if [ "${#tests[@]}" -gt 0 ]; then
+            node --test "${tests[@]}"
           else
-            echo "test:teacher-support not added yet"
+            echo "No Teacher Support tests yet"
           fi

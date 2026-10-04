@@ -174,3 +174,34 @@ test('reset and destroy remove inspector-owned presentation state', () => {
   inspector.destroy();
   assert.equal(root.querySelector('#hub-assistant-teacher-support-inspector'), null);
 });
+
+
+test('reference mode exposes a generic area picker while contextual mode does not', () => {
+  const { createScoreInspector } = require(INSPECTOR_PATH);
+  const { document, root } = setup();
+  const intents = [];
+  const inspector = createScoreInspector({ document, root, onIntent: (intent) => intents.push(intent) });
+
+  inspector.render(model({
+    mode: 'reference',
+    referenceOnlyLabel: 'Reference only',
+    areas: [
+      { id: 'area-one', title: 'Area One' },
+      { id: 'area-two', title: 'Area Two' },
+    ],
+    selectedAreaId: null,
+  }));
+
+  const areas = root.querySelectorAll('[data-reference-area]');
+  assert.deepEqual(areas.map((node) => node.textContent), ['Area One', 'Area Two']);
+  assert.ok(areas.every((node) => node.getAttribute('aria-pressed') === 'false'));
+  areas[1].dispatchEvent({ type: 'click' });
+  assert.deepEqual(intents, [{ type: 'reference-area', value: 'area-two' }]);
+
+  inspector.render(model({
+    mode: 'contextual',
+    areas: [{ id: 'area-one', title: 'Area One' }],
+    selectedAreaId: 'area-one',
+  }));
+  assert.equal(root.querySelector('[data-reference-area]'), null);
+});

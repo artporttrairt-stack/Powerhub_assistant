@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "test": "node --test tests/phase0/*.test.js",
-    "verify:phase0": "node scripts/verify-phase0.mjs"
+    "verify:phase0": "node scripts/verify-phase0.mjs",
+    "test:teacher-support": "node scripts/run-teacher-support-tests.mjs"
   }
 }

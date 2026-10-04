@@ -34,6 +34,13 @@
       if (wakeNode.dataset) wakeNode.dataset.itemId = 'wake';
       rootNode.appendChild(barsNode);
       rootNode.appendChild(wakeNode);
+      if (options.robotUrl) {
+        robotNode = documentLike.createElement('img');
+        robotNode.className = 'hub-support-robot';
+        robotNode.alt = '';
+        robotNode.src = options.robotUrl;
+        rootNode.appendChild(robotNode);
+      }
       documentLike.body.appendChild(rootNode);
       ensureWakeListener();
       return rootNode;
@@ -97,6 +104,7 @@
       rootNode = null;
       barsNode = null;
       wakeNode = null;
+      robotNode = null;
     }
 
     return Object.freeze({ mount, showBars, replaceBars, highlight, collapse, wake, destroy });

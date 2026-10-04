@@ -198,3 +198,16 @@ test('workflow decisions provide navigation/reference before context readiness',
   assert.equal(ready.kind, 'context-ready');
   assert.equal(ready.viewModel.areaId, 'academic');
 });
+
+
+test('pack exposes immutable generic reference options for controller/runtime composition', () => {
+  const p = pack();
+  const options = p.getReferenceOptions();
+  assert.deepEqual(options.levelCodes, ['EE', 'AE', 'ME', 'BE', 'WB']);
+  assert.deepEqual(options.assistLanguages, ['EN', 'VI']);
+  assert.equal(options.defaultAssistLanguage, 'EN');
+  assert.equal(options.areas.length, 8);
+  assert.deepEqual(options.areas[0], { id: 'academic', title: 'Academic Achievement' });
+  assert.equal(Object.isFrozen(options), true);
+  assert.equal(Object.isFrozen(options.areas), true);
+});

@@ -1,0 +1,104 @@
+{
+  "manifest_version": 3,
+  "name": "Hub assistant",
+  "description": "Hub assistant with robot-first bilingual language onboarding and teacher-led PowerHub guidance.",
+  "version": "1.9.7",
+  "version_name": "1.9.7-robot-first.1",
+  "minimum_chrome_version": "102",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://vas.educator.powerschool.com/*",
+    "https://vas.powerschool.com/teachers/*"
+  ],
+  "action": {
+    "default_title": "Hub assistant \u2014 Pilot",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "icons": {
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://vas.educator.powerschool.com/*"
+      ],
+      "js": [
+        "src/platform/browser/i18n.js",
+        "src/features/language-intro/language-intro-copy.js",
+        "src/features/language-intro/language-intro-presenter.js",
+        "src/features/language-intro/language-intro-state.js",
+        "src/features/language-intro/language-intro-controller.js",
+        "src/features/language-intro/language-intro-core.js",
+        "src/platform/powerhub/language-intro-hub-adapter.js",
+        "src/features/language-intro/language-intro.js",
+        "src/features/onboarding/onboarding-progress.js",
+        "src/features/wait-chatter/wait-chatter.js",
+        "src/features/session-timeout/session-timeout-keeper.js",
+        "src/state/identity/identity.js",
+        "src/features/message-mode-default/message-mode-default.js",
+        "src/platform/powerhub/hub-ui-adapter.js",
+        "src/features/guidance/guide-registry.js",
+        "src/features/guidance/guides/newsfeed-guides.js",
+        "src/features/guidance/guides/message-guides.js",
+        "src/features/guidance/guides/group-chat-guides.js",
+        "src/features/walkthrough/walkthrough.js",
+        "src/features/conversation-opening/conversation-opening.js",
+        "src/features/message-information/message-information-pane-guide.js",
+        "src/features/message-onboarding/message-onboarding.js",
+        "src/features/contextual-help/context-help.js",
+        "src/features/newsfeed/newsfeed-readiness.js",
+        "src/features/communication-language-warning/communication-language-warning.js",
+        "src/state/relations/guardian-student-relations.js",
+        "src/core/runtime/content-runtime.js",
+        "src/core/bootstrap/content.js"
+      ],
+      "css": [
+        "src/features/language-intro/robot-presenter.css",
+        "src/features/language-intro/language-intro.css",
+        "src/core/runtime/content-runtime.css",
+        "src/features/walkthrough/guide.css",
+        "src/features/message-mode-default/message-mode-default.css",
+        "src/features/newsfeed/newsfeed-readiness.css",
+        "src/features/communication-language-warning/communication-language-warning.css",
+        "src/features/message-onboarding/message-onboarding.css",
+        "src/features/message-information/message-information-pane-guide.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://vas.powerschool.com/teachers/*"
+      ],
+      "js": [
+        "src/platform/powerteacher/teacher-context.js",
+        "src/features/teacher-support/guidance/pack-registry.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/applicability.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/sources.js",
+        "src/features/teacher-support/guidance-packs/cam-primary/ms1/pack.js",
+        "src/features/teacher-support/runtime/support-lifecycle.js",
+        "src/core/bootstrap/teacher-support-content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/robot-assistant.png"
+      ],
+      "matches": [
+        "https://vas.educator.powerschool.com/*"
+      ]
+    }
+  ]
+}

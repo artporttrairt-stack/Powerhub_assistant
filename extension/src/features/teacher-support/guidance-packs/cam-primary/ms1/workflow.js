@@ -7,6 +7,7 @@
     label: 'MS1 Report',
     status: 'READY',
     visibleInPicker: true,
+    allowNavigationBeforeApplicability: true,
     navigation: Object.freeze({ targetView: 'standards', filterQuery: 'MS1' }),
     guidancePackId: 'cam-primary.ms1',
   });

@@ -52,11 +52,32 @@ const expectedPowerHub = {
 };
 const expectedPowerTeacherJs = [
   'src/platform/powerteacher/teacher-context.js',
+  'src/platform/powerteacher/teacher-ui-contract.js',
+  'src/platform/powerteacher/teacher-ui-adapter.js',
+  'src/features/teacher-support/registry/workflow-registry.js',
+  'src/features/teacher-support/state/support-state-resolver.js',
+  'src/features/teacher-support/ui/bubble-ui.js',
+  'src/features/teacher-support/controller/support-controller.js',
   'src/features/teacher-support/guidance/pack-registry.js',
   'src/features/teacher-support/guidance-packs/cam-primary/ms1/applicability.js',
   'src/features/teacher-support/guidance-packs/cam-primary/ms1/sources.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/areas.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/levels.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/official-criteria.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/plain-explanations.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/classroom-evidence.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/observation-checklists.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/comparisons.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/subject-examples/english.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/subject-examples/maths.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/subject-examples/science.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/subject-examples/index.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/copy.en.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/copy.vi.js',
+  'src/features/teacher-support/guidance-packs/cam-primary/ms1/workflow.js',
   'src/features/teacher-support/guidance-packs/cam-primary/ms1/pack.js',
   'src/features/teacher-support/runtime/support-lifecycle.js',
+  'src/features/teacher-support/runtime/teacher-support-runtime.js',
   'src/core/bootstrap/teacher-support-content.js'
 ];
 
@@ -69,13 +90,13 @@ test('manifest keeps exact PowerHub boundary and adds one isolated PowerTeacher 
   const teacher = manifest.content_scripts.filter((entry) => entry.matches?.includes('https://vas.powerschool.com/teachers/*'));
   assert.equal(teacher.length, 1);
   assert.deepEqual(teacher[0].js, expectedPowerTeacherJs);
-  assert.equal('css' in teacher[0], false);
+  assert.deepEqual(teacher[0].css, ['src/features/teacher-support/ui/bubble-ui.css']);
   assert.equal(teacher[0].run_at, 'document_idle');
   assert.equal(teacher[0].js.some((p) => p.includes('background') || p.includes('/popup/')), false);
-  assert.deepEqual(manifest.web_accessible_resources, [{ resources: ['assets/robot-assistant.png'], matches: ['https://vas.educator.powerschool.com/*'] }]);
+  assert.deepEqual(manifest.web_accessible_resources, [{ resources: ['assets/robot-assistant.png'], matches: ['https://vas.educator.powerschool.com/*', 'https://vas.powerschool.com/teachers/*'] }]);
 });
 
-test('Teacher Support bootstrap only starts dormant lifecycle', () => {
+test('Teacher Support bootstrap only starts the isolated Stage 2 runtime', () => {
   const src = fs.readFileSync(path.resolve(__dirname, '../../extension/src/core/bootstrap/teacher-support-content.js'), 'utf8').trim();
-  assert.equal(src, 'globalThis.PSQM.teacherSupportLifecycle.start();');
+  assert.equal(src, 'globalThis.PSQM.teacherSupportRuntime.start();');
 });

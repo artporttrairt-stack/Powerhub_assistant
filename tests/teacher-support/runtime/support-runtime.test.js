@@ -265,6 +265,7 @@ test('teacher-led walkthrough follows pack-produced states and show-target only 
 
   env.runtime.start();
   env.ui.emit('open');
+  env.ui.emit('guide');
   assert.equal(env.runtime.snapshot().state, 'GUIDANCE');
   assert.equal(env.ui.calls.panel.at(-1).stepId, 'open-grading');
 

@@ -156,7 +156,7 @@ const generated = walk(DIST)
     file,
     name: relative(DIST, file).replaceAll('\\', '/'),
   }))
-  .sort((a, b) => a.name.localeCompare(b.name));
+  .sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
 
 const checksumText = generated
   .map(({ file, name }) => `${sha256(file)}  ${name}`)

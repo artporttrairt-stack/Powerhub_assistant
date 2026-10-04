@@ -3,11 +3,8 @@
 
   function freezePack(pack) {
     return Object.freeze({
-      id: pack.id,
-      version: pack.version,
-      workflow: pack.workflow,
+      ...pack,
       sourceIds: Object.freeze([...(pack.sourceIds || [])]),
-      applicability: pack.applicability,
     });
   }
 
@@ -20,6 +17,9 @@
       }
       if (packs.has(pack.id)) {
         throw new Error(`Duplicate pack id: ${pack.id}`);
+      }
+      if (typeof pack.applicability !== 'function') {
+        throw new TypeError('Pack applicability is required.');
       }
       const stored = freezePack(pack);
       packs.set(stored.id, stored);

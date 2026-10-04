@@ -82,3 +82,11 @@ test('builder never creates or overwrites a Store ZIP path', () => {
   assert.equal(top.some((name) => /ms1.*\.zip$/i.test(name)), false);
   assert.equal(fs.existsSync(path.join(DIST, 'Hub_Assistant.zip')), false);
 });
+
+
+test('package exposes canonical Lab build and full Teacher Support verifier commands', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  assert.equal(pkg.scripts['build:ms1-lab'], 'node tools/build-ms1-lab.mjs');
+  assert.equal(pkg.scripts['verify:teacher-support'], 'node scripts/verify-teacher-support.mjs');
+  assert.equal(fs.existsSync(path.join(ROOT, 'scripts/verify-teacher-support.mjs')), true);
+});

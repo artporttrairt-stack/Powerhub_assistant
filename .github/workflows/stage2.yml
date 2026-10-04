@@ -1,0 +1,25 @@
+name: Stage 2 Verification
+
+on:
+  push:
+    branches:
+      - feature/stage2a-g0-ui-contract
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify-stage2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify Stage 2
+        run: npm run verify:stage2

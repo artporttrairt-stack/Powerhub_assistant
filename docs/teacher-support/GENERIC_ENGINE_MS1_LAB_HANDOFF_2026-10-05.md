@@ -27,7 +27,7 @@ The current environment does not have an authenticated `vas.powerschool.com` bro
   - `docs/superpowers/plans/2026-10-05-teacher-support-generic-engine-isolated-lab.md`
   - plan commit: `fa6f8c05fc4b8fccd2e1dd41313b0050a2ee0a6d`
 - Verified implementation/build source commit:
-  - `80c889cafb3217dfb5b024e3097aef77f3fdea5a`
+  - `02427d5763dd73889b6430af30aff0f71af08a9a`
 
 The verified build source commit is intentionally the implementation checkpoint used to produce the deterministic Lab artifact. Later handoff-only cleanup commits do not redefine that verified artifact.
 
@@ -93,9 +93,9 @@ Verified constraints:
 
 GitHub Actions run:
 
-- run ID: `37243656041`
+- run ID: `37243860586`
 - branch: `agent/ms1-generic-engine-lab-20261005`
-- source commit: `80c889cafb3217dfb5b024e3097aef77f3fdea5a`
+- source commit: `02427d5763dd73889b6430af30aff0f71af08a9a`
 - conclusion: **SUCCESS**
 
 Command:
@@ -105,7 +105,7 @@ Command:
 Results:
 
 - Phase 0 tests: **38 / 38 PASS**
-- Teacher Support tests: **83 / 83 PASS**
+- Teacher Support tests: **84 / 84 PASS**
 - new-source/test/tool syntax checks: **33 files PASS**
 - Lab build #1: **PASS**
 - Lab checksum validation #1: **21 files PASS**
@@ -127,9 +127,9 @@ Generated checksum file:
 
 `dist/ms1-lab/SHA256SUMS.txt`
 
-SHA-256 of `SHA256SUMS.txt` at verified source commit `80c889c...`:
+SHA-256 of `SHA256SUMS.txt` at verified source commit `02427d5...`:
 
-`5ebb342f65653e6edf64d7389dc0c8d956a278df579871f8e9449255761989b3`
+`346ab4646645fa6ba24d3480a35f945d0be26df5459ec432a0f778ae819fb490`
 
 Selected artifact hashes:
 
@@ -144,22 +144,22 @@ Selected artifact hashes:
 - protected base: `bcd9cb7996247c1f32706c9b41449ac947e7bb15`
 - source spec: canonical 2026-10-05 Generic Engine spec;
 - source plan: canonical 2026-10-05 grouped plan;
-- source commit: `80c889cafb3217dfb5b024e3097aef77f3fdea5a`;
+- source commit: `02427d5763dd73889b6430af30aff0f71af08a9a`;
 - Lab version: `0.1.0`.
 
 ## Downloadable Development Lab Artifact
 
 A development-only unpacked-Lab artifact was produced after the final deterministic implementation fix pass.
 
-- GitHub Actions run: `37243708757`
-- build source commit: `7cbf02c4a2a4603cb50e4690ee242f5ae29e6fda`
-- artifact name: `ms1-lab-0.1.0`
-- artifact ID: `11318371796`
-- uploaded artifact archive digest: `sha256:b6dcd919ad76d119749cd075e8b4a8079dc4938847a8ec7720457a1574584abd`
-- `SHA256SUMS.txt` digest inside that build: `d76b32df68fa8d6f4b8e0e714055bebc1523eb8b75a69b6e8f32976e266b38f4`
+- GitHub Actions run: `37243860586`
+- build source commit: `02427d5763dd73889b6430af30aff0f71af08a9a`
+- artifact name: `ms1-lab-final-review`
+- artifact ID: `11317414864`
+- uploaded artifact archive digest: `sha256:5bfc61047b0752d1173a6f36a7b6078fd369da835c5f28530655334289f4cbbb`
+- `SHA256SUMS.txt` digest inside that build: `346ab4646645fa6ba24d3480a35f945d0be26df5459ec432a0f778ae819fb490`
 - Lab version: `0.1.0`
 
-The build source differs from implementation checkpoint `80c889c...` only by handoff/temporary CI bookkeeping; canonical Teacher Support module bytes remain the verified implementation bytes. The temporary CI workflow used to execute and upload the artifact was removed afterward at cleanup commit `574e393236588abd349bee12963177c3ac792ea7`.
+This artifact was built directly from implementation checkpoint `02427d5...`. A temporary final-review CI workflow was used only to verify and upload this isolated Lab artifact and is removed again during branch cleanup.
 
 This artifact is for authorized unpacked-development smoke testing only. It is not a Store package and must not be published as a production release.
 
@@ -172,14 +172,15 @@ Important findings found and fixed with RED -> GREEN coverage before the final v
 1. entry click now opens the pack-owned intro panel before any walkthrough/contextual guidance starts;
 2. the exact MS1 intro headline is pack-owned rather than hard-coded into generic runtime/UI;
 3. robot bounce now runs only on a closed-to-open panel transition rather than on every panel rerender;
-4. the floating panel/inspector now has an opaque readable card surface.
+4. the floating panel/inspector now has an opaque readable card surface;
+5. the generic PowerTeacher adapter no longer relies on the unverified `body.score-inspector-score` assumption; it now uses the G0-verified `#keypad-score` presence plus the generic dynamic `[id^="keypad-score-"][id$="-button"]` pattern, excludes the known Enter control, and reads choices without assuming an unverified DOM parent/child relationship.
 
 Final verifier after those fixes:
 
-- run: `37243656041`
-- source commit: `80c889cafb3217dfb5b024e3097aef77f3fdea5a`
+- run: `37243860586`
+- source commit: `02427d5763dd73889b6430af30aff0f71af08a9a`
 - Phase 0: **38 / 38 PASS**
-- Teacher Support: **83 / 83 PASS**
+- Teacher Support: **84 / 84 PASS**
 - new-source/test/tool syntax: **33 files PASS**
 - deterministic Lab build/checksum/protected-diff gates: **PASS**
 

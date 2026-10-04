@@ -31,6 +31,18 @@
     }
 
     const policy = deps.applicability.createMs1Policy(deps.official);
+    const referenceOptions = Object.freeze({
+      areas: Object.freeze(deps.official.OFFICIAL_AREAS.map((area) =>
+        Object.freeze({ id: area.id, title: area.title })
+      )),
+      levelCodes: deps.official.LEVEL_CODES,
+      assistLanguages: deps.locale.SUPPORTED_ASSIST_LANGUAGES,
+      defaultAssistLanguage: deps.locale.DEFAULT_ASSIST_LANGUAGE,
+    });
+
+    function getReferenceOptions() {
+      return referenceOptions;
+    }
 
     function getReference({ areaId, levelCode, language, subject } = {}) {
       const officialCriterion = deps.official.getOfficialCriterion(areaId, levelCode);
@@ -78,6 +90,7 @@
       isCompatibleScale: policy.isCompatibleScale,
       evaluateContextualEligibility: policy.evaluateContextualEligibility,
       decideWorkflow: policy.decideWorkflow,
+      getReferenceOptions,
       getReference,
     });
   }

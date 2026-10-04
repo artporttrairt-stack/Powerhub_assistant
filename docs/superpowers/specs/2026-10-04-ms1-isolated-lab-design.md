@@ -1,7 +1,7 @@
 # MS1 Isolated Lab — Design Specification
 
 **Date:** 2026-10-04  
-**Status:** DRAFT FOR USER REVIEW — implementation is not authorized yet  
+**Status:** FINAL SPEC FOR USER REVIEW — G0 live DOM inspection reconciled; implementation is not authorized yet  
 **Repository:** `artporttrairt-stack/Powerhub_assistant`  
 **Design branch:** `feature/ms1-isolated-lab`  
 **Protected base:** `main @ bcd9cb7996247c1f32706c9b41449ac947e7bb15`
@@ -32,7 +32,7 @@ This specification covers:
 7. source-of-truth and academic-content rules;
 8. safety, privacy, accessibility, performance, and test gates.
 
-This specification does **not** authorize product implementation. After this document is reviewed, the next required stage is G0 live DOM inspection. The implementation plan is written only after the inspection evidence is reconciled back into this spec.
+This specification does **not** authorize product implementation. G0 live DOM inspection is now complete and its findings are reconciled into this document. The next required gate is explicit user approval of this Final Spec. Only after that approval may the `writing-plans` stage begin.
 
 ---
 
@@ -317,11 +317,37 @@ Route family alone is not proof of Standards state.
 
 ### 4.3 Known live DOM caution
 
-A previous live probe observed look-alike MS1 columns such as a Teacher Assessment Grade marker and VN Ranking marker in the same broad Standards surface.
+Live inspection confirmed that broad `MS1` filtering exposes multiple non-rubric look-alikes in the same Standards surface, including:
+
+- `MS1-TA-Grade...`
+- `MS1-VN-Ranking...`
+- `MS1-TA-Score...`
+- `MS1-Unit1...`
+- `MS1-LSPC...`
 
 Therefore:
 
 **generic `MS1` text is insufficient to activate the MS1 rubric.**
+
+### 4.4 G0 live DOM findings — 2026-10-04
+
+The structured D0–D8 inspection produced the following runtime-relevant findings:
+
+1. Standards can be verified semantically on `/classes/final_grades` using the visible Standards heading/grid state; route family alone is not enough.
+2. The native filter may remain set to `MS1` across a class switch, so filter text alone is not current-context proof.
+3. PowerTeacher paginates / partially renders Standards columns. The full eight-strand rubric is **not guaranteed to exist simultaneously in the live DOM**.
+4. In the inspected Grade 2 English class, canonical rubric strands observed live across column pages were:
+   - `MS1-Academic` — Academic Achievement;
+   - `MS1-Attitude` — Attitude Towards Learning;
+   - `MS1-Behaviour` — Behaviour and Personal Development;
+   - `MS1-Equipment` — Equipment and Resources.
+5. The same inspected class did not expose Classwork, Communication, Collaboratively, or Creativity during the traversal. This is evidence about that live context only; it must not be generalized into a claim that those official categories do not exist elsewhere.
+6. The native selected score cell is a semantic Standards cell (`td.standard-col.keypad-cell...`) repeated against the current standard column. A fixed numeric `cellIndex` is not a safe identity.
+7. Opening a verified native MS1 cell exposed the native five-level scale `EE / AE / ME / BE / WB`.
+8. A class switch changed the visible course label while keeping the route path `/classes/final_grades` unchanged. Both `popstate` and `hashchange` fired in the inspected transition.
+9. On that class switch, the previous selected cell disappeared and the native score inspector closed, while the `MS1` filter value persisted.
+
+These findings replace the earlier assumption that eight canonical strands must be simultaneously present before contextual academic guidance may activate.
 
 ---
 
@@ -422,26 +448,39 @@ The purpose is to distinguish the actual 8-strand MS1 set from:
 - LSPC;
 - other look-alike MS1 columns.
 
-### 5.6 D5 — eight-strand semantic mapping
+### 5.6 D5 — paginated strand semantics
 
-Map live rendered DOM aliases to exactly eight canonical groups.
+The official content model still contains exactly eight categories:
 
-Provisional canonical implementation labels, supported by current metadata and source naming, are:
+- Academic Achievement;
+- Attitude Towards Learning;
+- Behaviour and Personal Development;
+- Completion of classwork/Homework (Secondary);
+- Communication Skills;
+- Working Collaboratively;
+- Creativity and Critical thinking;
+- Equipment and Resources.
+
+However, G0 proved that PowerTeacher may paginate or partially render standard columns. Therefore the runtime must **not** require all eight strands to be simultaneously present in the DOM.
+
+Live-verified aliases from the inspected class are:
 
 - `MS1-Academic`
 - `MS1-Attitude`
 - `MS1-Behaviour`
-- `MS1-Classwork`
-- `MS1-Communication`
-- `MS1-Collaboratively`
-- `MS1-Creativity`
 - `MS1-Equipment`
 
-These identifiers are **not yet promoted to final live DOM aliases by this spec**.
+The remaining canonical code aliases previously proposed for Classwork, Communication, Collaboratively, and Creativity are not promoted to live-verified selectors by this inspection.
 
-G0 must determine what PowerTeacher actually renders.
+For those unobserved categories, the future adapter should prefer exact normalized semantic matching against the official category title exposed in the current header/title rather than pretending an unobserved code alias has been proven.
 
-PASS requires one unambiguous mapping for every official category.
+D5 PASS means the implementation contract can:
+
+1. distinguish rubric strands from TA/Ranking/Unit/LSPC look-alikes;
+2. recognize a currently rendered rubric strand semantically;
+3. tolerate pagination / partial rendering;
+4. fail closed when current strand identity is unknown;
+5. avoid treating absence from the current DOM page as proof that an official category does not exist.
 
 ### 5.7 D6 — native cell-to-strand mapping
 
@@ -469,29 +508,44 @@ Metadata such as scale ID `5407` may be used as corroborating evidence when avai
 
 ### 5.9 D8 — class/route switch
 
-Change route/class manually.
+Change class manually using native PowerTeacher UI.
 
-Verify:
+G0 verified that:
 
-- old cell/strand context becomes invalid;
-- old Score Inspector guidance is removed or invalidated immediately;
-- new guidance requires a fresh DOM read;
+- the visible course label changed;
+- the normalized route path remained `/classes/final_grades`;
+- both `popstate` and `hashchange` fired for the inspected transition;
+- the old selected cell disappeared;
+- the native score inspector closed;
+- the `MS1` filter value persisted.
+
+Therefore:
+
+- route **path string change is not required** for a class-context change;
+- route events are invalidation signals, not sufficient proof of the new class state;
+- after an approved route event, the adapter must discard old cell/strand state and perform a fresh semantic read before academic guidance resumes;
+- persisted filter text must not preserve academic eligibility by itself;
 - no raw old section identity is retained.
 
-### 5.10 G0 stop condition
+### 5.10 G0 stop condition — COMPLETE
 
-Stop DOM inspection once all of the following are proven:
+G0 inspection is complete.
+
+The evidence required for implementation planning is now:
 
 ```text
 Standards state
 + Filter state
-+ complete 8-strand mapping
-+ cell -> strand mapping
++ rubric-vs-look-alike discrimination
++ paginated/current-strand semantic mapping
++ native cell -> current strand relation
 + native EE/AE/ME/BE/WB compatibility
-+ route/class invalidation behavior
++ class/route invalidation behavior
 ```
 
-Do not continue into Angular controllers, internal services, or network payloads merely because they are available.
+A simultaneous 8/8 DOM mapping is **not** a stop condition because live PowerTeacher does not guarantee simultaneous rendering of all official categories.
+
+Angular controller probing was attempted only as a bounded forensic shortcut and returned unavailable scope; inspection stopped there as designed. No controller, internal-service, or network dependency is authorized for production.
 
 ### 5.11 G0 artifacts
 
@@ -778,30 +832,35 @@ Hub must not:
 
 Academic rubric content must not activate from generic `MS1` text.
 
-The final gate is defined by G0 evidence, but its intended shape is:
+G0 established a **strand-local, pagination-aware gate**:
 
 ```text
 verified PowerTeacher
 + verified Standards state
-+ MS1 filter/context
-+ complete eight-strand semantic set
-+ native cell maps to one verified strand
++ current rendered standard header is semantically one official MS1 rubric category
++ native selected cell maps to that current standard column
 + native scale is compatible with EE/AE/ME/BE/WB
-= MS1 academic guidance eligible
++ context is fresh after the latest class/route transition
+= contextual MS1 academic guidance eligible
 ```
 
-Negative examples that must not activate the eight-strand rubric:
+The global `MS1` filter may help the teacher reach the reporting surface, but it is not sufficient eligibility evidence and may persist across class changes.
 
-- only `MS1-TA-Grade`;
-- only `MS1-TA-Score`;
-- only VN Ranking;
-- only Unit Quiz;
-- only LSPC;
+Negative examples that must not activate contextual rubric guidance:
+
+- `MS1-TA-Grade`;
+- `MS1-TA-Score`;
+- VN Ranking;
+- Unit Quiz;
+- LSPC;
 - generic text `MS1`;
-- partial strand set;
+- filter value `MS1` without a verified current rubric strand;
+- current header not semantically mapped to an official category;
 - ambiguous duplicate grid;
 - incompatible native level scale;
-- stale context after class/route change.
+- stale cell/strand state after class/route change.
+
+A partial visible strand set is **not** a failure by itself. PowerTeacher may paginate or partially render columns. Eligibility is evaluated against the current verified strand/cell, not against simultaneous presence of all eight categories.
 
 ---
 
@@ -998,12 +1057,19 @@ Do not persist:
 
 ## 14. Route and stale-context behavior
 
-On `hashchange` or `popstate`:
+G0 verified that a native class switch can keep the same normalized route path while still firing `popstate` and `hashchange`.
+
+On either approved route event:
 
 1. immediately invalidate current native strand/cell context;
 2. close or neutralize stale Score Inspector content;
 3. retain only safe UI shell state where appropriate;
-4. require a fresh semantic DOM read before academic guidance resumes.
+4. treat the old visible course label, selected cell, and strand mapping as stale;
+5. require a fresh semantic DOM read before academic guidance resumes.
+
+The adapter must not depend on `routePathChanged === true`. Route events are invalidation signals; the fresh visible course/context read establishes the new state.
+
+The native `MS1` filter may persist across class switches and must not carry academic eligibility forward.
 
 Old class/strand guidance must never carry forward into a new class.
 
@@ -1013,8 +1079,9 @@ A future plan may use a bounded explicit re-check triggered by:
 
 - teacher presses **Continue**;
 - teacher presses **Help me from here**;
-- approved native route event;
-- another explicitly approved bounded signal found during G0.
+- approved native route event.
+
+No additional always-on DOM observer is justified by G0.
 
 ---
 
@@ -1137,11 +1204,16 @@ Tests must cover:
 - Standards verified only by composite state;
 - filter visible/hidden;
 - semantic Show/Hide Filter handling;
-- complete eight strands → eligible;
-- partial strands → fail closed;
-- look-alike TA/Ranking columns → fail closed;
+- generic `MS1` filter alone → not eligible;
+- current verified rubric strand + selected native cell + compatible five-level scale → eligible;
+- partial/paginated visible strand set → allowed;
+- unknown current strand → fail closed;
+- look-alike TA Grade / TA Score / Ranking / Unit / LSPC columns → fail closed;
+- fixed numeric cell index is not used as strand identity;
 - ambiguous grid → fail closed;
-- stale route context → fail closed.
+- class switch with unchanged normalized route path still invalidates old context;
+- persisted `MS1` filter after class switch does not preserve eligibility;
+- stale route/class context → fail closed.
 
 ### 19.3 Academic content
 
@@ -1181,7 +1253,7 @@ Tests must prove:
 - no broad MutationObserver;
 - no polling;
 - no recurring animation timer;
-- route invalidation removes stale academic context.
+- route-event invalidation removes stale academic context even when the normalized route path is unchanged.
 
 ### 19.6 Motion
 
@@ -1208,15 +1280,17 @@ Authorized live PowerTeacher smoke must validate:
 6. filter hidden path works;
 7. filter already visible path skips correctly;
 8. `MS1` already entered path skips correctly;
-9. actual 8-strand DOM context is recognized;
-10. TA Grade / VN Ranking look-alikes do not activate rubric;
-11. current native cell maps to the correct strand;
+9. paginated/partial MS1 strand rendering is handled without requiring all eight categories simultaneously;
+10. TA Grade / TA Score / VN Ranking / Unit / LSPC look-alikes do not activate rubric guidance;
+11. current native cell maps to the correct currently rendered strand without relying on fixed cell index;
 12. native EE/AE/ME/BE/WB compatibility is verified;
 13. Score Inspector follows current strand;
-14. no grade is automatically selected or written;
-15. collapse/wake has no duplicate UI;
-16. route/class switch drops stale guidance;
-17. no attributable console error or obvious CPU spike.
+14. a verified single rubric strand may activate contextual guidance even when other official strands are not currently rendered;
+15. no grade is automatically selected or written;
+16. collapse/wake has no duplicate UI;
+17. class switch drops stale guidance even if the normalized route path does not change;
+18. persisted `MS1` filter does not preserve old class eligibility;
+19. no attributable console error or obvious CPU spike.
 
 A live failure must be reproduced deterministically before changing runtime logic whenever feasible.
 
@@ -1256,6 +1330,8 @@ SEPARATE FUTURE PRODUCTION-INTEGRATION SPEC
 
 No implementation task may bypass this sequence.
 
+**Current gate:** STEP 3 complete — Final Spec is awaiting explicit user approval. The next allowed action after approval is STEP 4, writing the implementation plan.
+
 ---
 
 ## 22. Decisions locked by this draft
@@ -1274,16 +1350,20 @@ The following are deliberate design decisions, not placeholders:
 10. I know already = session/workflow quiet only; `?` remains callable.
 11. Quick reference = source-backed reference without claiming verified current context.
 12. Score Inspector is contextual to the native strand/cell; no duplicate area picker in the primary live flow.
-13. Complete 8-strand context is required before academic MS1 guidance.
-14. TA Grade / TA Score / Ranking / LSPC / Unit Quiz are not the 8-strand MS1 rubric.
-15. Official source wins over bilingual/derived material.
-16. English is the default MS1 academic content language.
-17. `VI` is an explicit, secondary MS1-only assistance control for local Cambridge teachers; it is not linked to Hub's global/native language.
-18. English/Maths/Science examples are optional interpretive overlays, not cut-offs.
-19. Hub never recommends or writes a final academic level.
-20. Unknown/ambiguous/stale context fails closed.
-21. No broad observer or polling is added.
-22. Production integration is a separate future design/plan.
+13. Academic eligibility is strand-local and pagination-aware; simultaneous 8/8 DOM presence is not required.
+14. TA Grade / TA Score / Ranking / LSPC / Unit Quiz are not the official MS1 rubric categories.
+15. Current strand identity must come from semantic header/cell evidence, not fixed numeric cell index.
+16. Native EE/AE/ME/BE/WB compatibility is part of the contextual activation gate.
+17. Route events invalidate old academic context even when the normalized route path string is unchanged.
+18. Persisted `MS1` filter text never preserves academic eligibility across a class switch.
+19. Official source wins over bilingual/derived material.
+20. English is the default MS1 academic content language.
+21. `VI` is an explicit, secondary MS1-only assistance control for local Cambridge teachers; it is not linked to Hub's global/native language.
+22. English/Maths/Science examples are optional interpretive overlays, not cut-offs.
+23. Hub never recommends or writes a final academic level.
+24. Unknown/ambiguous/stale context fails closed.
+25. No broad observer or polling is added.
+26. Production integration is a separate future design/plan.
 
 ---
 
@@ -1299,7 +1379,10 @@ Before approving G0 inspection, review whether this spec correctly captures:
 - the strict source hierarchy;
 - the separation between Hub global/native language and MS1's explicit English-first / optional `VI` assist;
 - the no-auto-grade teacher-control rule;
-- the 8-strand gate;
+- the strand-local, pagination-aware academic gate;
+- route/class invalidation when the visible course changes even if the route path string does not;
 - the isolation from existing Phase 1/production behavior.
 
-Approval of this document authorizes only the next stage: **G0 read-only DOM inspection**. It does not authorize implementation.
+G0 inspection is complete and reconciled into this document.
+
+Approval of this Final Spec authorizes only the next stage: **write the implementation plan using the Superpowers writing-plans gate**. It does not authorize implementation.

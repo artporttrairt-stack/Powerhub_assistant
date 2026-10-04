@@ -5,6 +5,7 @@ on:
     branches:
       - feature/teacher-support-phase0
       - baseline/8j-r2-live-pass-20261004
+      - main
   pull_request:
     branches:
       - baseline/8j-r2-live-pass-20261004

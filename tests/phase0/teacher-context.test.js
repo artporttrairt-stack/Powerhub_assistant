@@ -44,3 +44,14 @@ test('valid PowerTeacher route without sectionId reports sectionPresent false', 
   assert.equal(result.routePath, '/classes/assignments');
   assert.equal(result.sectionPresent, false);
 });
+
+test('redacts identifier-like hash path segments from routePath', () => {
+  const result = parsePowerTeacherLocation(loc('https://vas.powerschool.com/teachers/index.html#/classes/9750/assignments/550e8400-e29b-41d4-a716-446655440000?studentId=12345'));
+  assert.equal(result.platformVerified, true);
+  assert.equal(result.routePath, '/classes/:redacted/assignments/:redacted');
+  const serialized = JSON.stringify(result);
+  assert.equal(serialized.includes('9750'), false);
+  assert.equal(serialized.includes('550e8400-e29b-41d4-a716-446655440000'), false);
+  assert.equal(serialized.includes('12345'), false);
+  assert.equal(serialized.includes('studentId'), false);
+});

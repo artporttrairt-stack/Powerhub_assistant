@@ -17,13 +17,25 @@
     });
   }
 
+  function sanitizeRoutePath(rawPath) {
+    if (!rawPath) return '';
+    const normalized = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
+    return normalized
+      .split('/')
+      .map((segment, index) => {
+        if (index === 0 || !segment) return segment;
+        return /^[A-Za-z][A-Za-z-]{0,31}$/.test(segment) ? segment : ':redacted';
+      })
+      .join('/');
+  }
+
   function parseHashRoute(hashValue) {
     const hash = String(hashValue || '').replace(/^#/, '');
     if (!hash) return { routePath: '', sectionPresent: false };
     const queryIndex = hash.indexOf('?');
     const rawPath = queryIndex >= 0 ? hash.slice(0, queryIndex) : hash;
     const rawQuery = queryIndex >= 0 ? hash.slice(queryIndex + 1) : '';
-    const routePath = rawPath ? (rawPath.startsWith('/') ? rawPath : `/${rawPath}`) : '';
+    const routePath = sanitizeRoutePath(rawPath);
     const sectionPresent = new URLSearchParams(rawQuery).has('sectionId');
     return { routePath, sectionPresent };
   }

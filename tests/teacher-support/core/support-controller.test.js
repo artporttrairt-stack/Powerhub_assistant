@@ -27,6 +27,17 @@ function build({ decisionKind = 'context-unverified', requested = 'fake.second' 
         viewModel: { screen: decisionKind },
       };
     },
+    getReferenceOptions() {
+      return {
+        areas: [{ id: 'area-one', title: 'Area One' }],
+        levelCodes: ['L1', 'L2'],
+        assistLanguages: ['A', 'B'],
+        defaultAssistLanguage: 'A',
+      };
+    },
+    getReference(args) {
+      return { ...args, source: 'fake-pack' };
+    },
   });
   return { controller: createSupportController({ registry, resolver: resolveSupportState }), calls };
 }
@@ -69,6 +80,39 @@ test('a fake second workflow reaches CONTEXT_READY without core changes', () => 
   const { controller } = build({ decisionKind: 'context-ready' });
   const result = controller.evaluate({ context: { requestedPackId: 'fake.second' }, uiState: {}, mode: 'active' });
   assert.equal(result.state, 'CONTEXT_READY');
+});
+
+test('controller exposes selected pack reference options without leaking the pack to runtime', () => {
+  const { controller } = build();
+  assert.deepEqual(controller.getReferenceOptions({ requestedPackId: 'fake.second' }), {
+    areas: [{ id: 'area-one', title: 'Area One' }],
+    levelCodes: ['L1', 'L2'],
+    assistLanguages: ['A', 'B'],
+    defaultAssistLanguage: 'A',
+  });
+  assert.equal(controller.getReferenceOptions({ requestedPackId: 'other' }), null);
+});
+
+test('controller resolves reference content through the selected pack only', () => {
+  const { controller } = build();
+  assert.deepEqual(controller.getReference({
+    context: { requestedPackId: 'fake.second' },
+    areaId: 'area-one',
+    levelCode: 'L2',
+    language: 'B',
+    subject: 'demo',
+  }), {
+    areaId: 'area-one',
+    levelCode: 'L2',
+    language: 'B',
+    subject: 'demo',
+    source: 'fake-pack',
+  });
+  assert.equal(controller.getReference({
+    context: { requestedPackId: 'other' },
+    areaId: 'area-one',
+    levelCode: 'L1',
+  }), null);
 });
 
 test('generic core source contains no MS1 academic policy', () => {

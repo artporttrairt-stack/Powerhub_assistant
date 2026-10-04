@@ -1,0 +1,79 @@
+.ha-ts-entry {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  cursor: pointer;
+  z-index: 2147483000;
+}
+
+.ha-ts-attention {
+  animation: ha-ts-entry-spring 560ms cubic-bezier(.2,.9,.2,1) 1;
+}
+
+.ha-ts-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 76px;
+  width: min(400px, calc(100vw - 32px));
+  max-height: min(70vh, 680px);
+  overflow: auto;
+  padding: 18px;
+  border-radius: 18px;
+  z-index: 2147483000;
+}
+
+.ha-ts-panel[hidden],
+.ha-ts-entry[hidden] {
+  display: none;
+}
+
+.ha-ts-robot {
+  display: block;
+  max-width: 96px;
+  height: auto;
+}
+
+.ha-ts-robot-bounce {
+  animation: ha-ts-robot-bounce 1.8s ease-in-out 3;
+}
+
+.ha-ts-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ha-ts-action,
+.ha-ts-entry {
+  font: inherit;
+}
+
+.ha-ts-action:focus-visible,
+.ha-ts-entry:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+@keyframes ha-ts-entry-spring {
+  0% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-16px) scale(1.08); }
+  72% { transform: translateY(2px) scale(.99); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes ha-ts-robot-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ha-ts-attention,
+  .ha-ts-robot-bounce {
+    animation: none;
+    transform: none;
+  }
+}

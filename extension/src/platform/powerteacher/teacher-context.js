@@ -3,6 +3,14 @@
 
   const ALLOWED_ORIGIN = 'https://vas.powerschool.com';
   const TEACHERS_PATH_PREFIX = '/teachers/';
+  const SAFE_ROUTE_SEGMENTS = new Set([
+    'assignments',
+    'classes',
+    'grading',
+    'scores',
+    'standards',
+    'students',
+  ]);
 
   function makeContext({ originVerified, pathVerified, routePath, sectionPresent, reason }) {
     const platformVerified = originVerified && pathVerified;
@@ -24,7 +32,7 @@
       .split('/')
       .map((segment, index) => {
         if (index === 0 || !segment) return segment;
-        return /^[A-Za-z][A-Za-z-]{0,31}$/.test(segment) ? segment : ':redacted';
+        return SAFE_ROUTE_SEGMENTS.has(segment.toLowerCase()) ? segment.toLowerCase() : ':redacted';
       })
       .join('/');
   }

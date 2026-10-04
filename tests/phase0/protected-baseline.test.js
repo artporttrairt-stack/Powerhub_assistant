@@ -8,6 +8,7 @@ const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '../..');
 const INVENTORY = path.join(ROOT, 'verification', 'SHA256_INVENTORY.txt');
+const GITATTRIBUTES = path.join(ROOT, '.gitattributes');
 
 function sha256(filePath) {
   return crypto.createHash('sha256').update(fs.readFileSync(filePath)).digest('hex');
@@ -33,4 +34,9 @@ test('protected 8J-R2 extension files remain byte-identical except manifest.json
     assert.ok(fs.existsSync(filePath), `Protected baseline file is missing: ${relativePath}`);
     assert.equal(sha256(filePath), digest, `Protected baseline drift: ${relativePath}`);
   }
+});
+
+test('hash-locked text files force LF checkout even when Windows autocrlf is enabled', () => {
+  const attributes = fs.readFileSync(GITATTRIBUTES, 'utf8');
+  assert.match(attributes, /^\* text=auto eol=lf$/m);
 });

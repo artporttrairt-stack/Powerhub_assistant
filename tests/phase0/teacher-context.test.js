@@ -55,3 +55,10 @@ test('redacts identifier-like hash path segments from routePath', () => {
   assert.equal(serialized.includes('12345'), false);
   assert.equal(serialized.includes('studentId'), false);
 });
+
+test('redacts alphabetic identifier-like hash path segments instead of treating them as route structure', () => {
+  const result = parsePowerTeacherLocation(loc('https://vas.powerschool.com/teachers/index.html#/classes/AliceNguyen/assignments'));
+  assert.equal(result.platformVerified, true);
+  assert.equal(result.routePath, '/classes/:redacted/assignments');
+  assert.equal(JSON.stringify(result).includes('AliceNguyen'), false);
+});

@@ -24,8 +24,8 @@
     courseLabel: '.course-name',
     standardHeader: 'th.standard-column-header.standard-col',
     standardCell: 'td.standard-col',
-    nativeInspector: 'body.score-inspector-score',
-    nativeScoreChoice: '[role="option"], [role="button"]',
+    nativeInspector: '#keypad-score',
+    nativeScoreChoice: '[id^="keypad-score-"][id$="-button"]:not(#keypad-score-enter-button)',
   });
 
   const TARGET_SELECTORS = Object.freeze({

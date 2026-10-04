@@ -21,6 +21,8 @@
     if (!context || context.platform !== 'powerteacher' || context.platformVerified !== true) {
       return result(false, 'platform-unverified');
     }
+    if (context.ambiguous === true) return result(false, 'context-ambiguous');
+    if (context.sectionContextVerified === false) return result(false, 'section-context-stale');
     if (context.workflow !== 'ms1' || context.workflowVerified !== true) {
       return result(false, 'workflow-unverified');
     }

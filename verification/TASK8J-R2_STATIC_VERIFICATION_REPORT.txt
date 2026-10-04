@@ -1,0 +1,58 @@
+=== TASK 8J-R2 STATIC VERIFICATION ===
+R1 LIVE-PASS baseline ZIP SHA-256: 50eec2e96689517bdbcc288d8c5afc3b384ddfb26f1ea3371d8d8e98f87be96f
+R2 candidate ZIP: Hub_Assistant_TASK8J-R2_NICKNAME_DEAD_CODE_CLEANUP_BUILD.zip
+R2 candidate SHA-256: 4f516a607a3da6ba9c476b0c76b5f0d2b23fcc407a0d3b751ac9d8ceb86e57b8
+
+Scope:
+- Remove dormant nickname schema/helpers from identity.js.
+- Remove unused NICKNAME_MAX_LENGTH.
+- Replace nickname-named Guardian exact-match helper with existing neutral matchText() (same NFC/lowercase behavior).
+- Remove orphan nickname Help entries from Messages and Group Information.
+- Preserve legacy privacy purge in background.js for direct upgrades from older builds.
+- Preserve Guardian recipient-search copy that warns not to use a nickname.
+
+Changed files vs R1 LIVE-PASS baseline:
+src/core/runtime/content-runtime.js
+src/features/contextual-help/context-help.js
+src/platform/browser/i18n.js
+src/state/identity/identity.js
+
+Verification:
+- 8J-R2 cleanup contract: 8J-R2 cleanup contract PASS
+- Shared identity behavior: 8J-R2 identity equivalence PASS
+- JS syntax: 30/30 PASS
+- Manifest: byte-identical to R1 PASS
+- Permissions/host permissions: unchanged PASS
+- Changed-file allowlist: 4 files only PASS
+- i18n parity PASS: 380/380
+- git diff --check: PASS
+- ZIP integrity: PASS
+- Packaged tree round-trip: PASS
+
+Identity regression preserved for representative Student/Guardian/Staff accounts across:
+- auto
+- native
+- legacy-normalized
+and for stableKey(), identityKey(), role(), verified identity evidence, and verified nameParts.
+
+Residual nickname terms intentionally allowed only in:
+- background.js LEGACY_NICKNAME_KEYS cleanup, so direct upgrades from pre-R1 builds still purge old student nickname data.
+- guide.findParent.name EN/VI safety text, because Guardian recipient search must use the original full account name and not a nickname.
+
+Security/performance primitive delta vs R1:
+- setInterval: 0 -> 0
+- chrome.alarms: 0 -> 0
+- indexedDB: 0 -> 0
+- fetch(: 0 -> 0
+- XMLHttpRequest: 0 -> 0
+- WebSocket: 0 -> 0
+- eval(: 0 -> 0
+- new Function: 0 -> 0
+No new network, timer, IndexedDB, analytics, cloud sync, or permissions.
+
+Review notes:
+- R2 deliberately keeps LEGACY_NICKNAME_KEYS cleanup; removing it would leave old persistent nickname data for users who upgrade directly from an older build.
+- R2 does not modify Send separately, New Message, recipient add/remove, Group Chat pagination/dedupe, Newsfeed, Healthy Post, Walkthrough/Map, Language Warning, or final Send/Create/Publish control.
+- Final review is a self-review in this runtime; no independent reviewer/subagent tool is available.
+
+Status: STATIC CANDIDATE ONLY. Requires Chrome/Edge live validation before calling 8J-R2 LIVE PASS.

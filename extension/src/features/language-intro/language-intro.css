@@ -1,0 +1,91 @@
+[data-phi-language-intro-root].phi-state-welcome .phi-frame {
+  top: 48%;
+}
+
+[data-phi-language-intro-root].phi-state-point-avatar .phi-frame,
+[data-phi-language-intro-root].phi-state-point-language-settings .phi-frame {
+  top: auto;
+  bottom: 24px;
+  transform: translateX(-50%);
+}
+
+/*
+ * Language Settings is a native PowerHub dialog that opens in the center of
+ * the viewport. Once that dialog is open, keep the Assistant in a compact
+ * side rail so the native settings remain visible and teacher-controlled.
+ */
+[data-phi-language-intro-root].phi-state-reference-found .phi-frame,
+[data-phi-language-intro-root].phi-state-waiting-reference .phi-frame,
+[data-phi-language-intro-root].phi-state-reference-missing .phi-frame,
+[data-phi-language-intro-root].phi-state-saving .phi-frame,
+[data-phi-language-intro-root].phi-state-close-language-settings .phi-frame,
+[data-phi-language-intro-root].phi-state-error .phi-frame {
+  top: 50%;
+  left: 20px;
+  grid-template-columns: 1fr;
+  column-gap: 0;
+  align-items: start;
+  width: clamp(190px, 22vw, 300px);
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translateY(-50%);
+}
+
+[data-phi-language-intro-root].phi-state-reference-found .phi-robot,
+[data-phi-language-intro-root].phi-state-waiting-reference .phi-robot,
+[data-phi-language-intro-root].phi-state-reference-missing .phi-robot,
+[data-phi-language-intro-root].phi-state-saving .phi-robot,
+[data-phi-language-intro-root].phi-state-close-language-settings .phi-robot,
+[data-phi-language-intro-root].phi-state-error .phi-robot {
+  display: none;
+}
+
+[data-phi-language-intro-root].phi-state-reference-found .phi-speech::before,
+[data-phi-language-intro-root].phi-state-waiting-reference .phi-speech::before,
+[data-phi-language-intro-root].phi-state-reference-missing .phi-speech::before,
+[data-phi-language-intro-root].phi-state-saving .phi-speech::before,
+[data-phi-language-intro-root].phi-state-close-language-settings .phi-speech::before,
+[data-phi-language-intro-root].phi-state-error .phi-speech::before {
+  display: none;
+}
+
+[data-phi-language-intro-root].phi-state-reference-found .phi-speech,
+[data-phi-language-intro-root].phi-state-waiting-reference .phi-speech,
+[data-phi-language-intro-root].phi-state-reference-missing .phi-speech,
+[data-phi-language-intro-root].phi-state-saving .phi-speech,
+[data-phi-language-intro-root].phi-state-close-language-settings .phi-speech,
+[data-phi-language-intro-root].phi-state-error .phi-speech {
+  padding: 18px;
+}
+
+[data-phi-language-intro-root].phi-state-reference-found .phi-actions,
+[data-phi-language-intro-root].phi-state-reference-missing .phi-actions,
+[data-phi-language-intro-root].phi-state-error .phi-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+[data-phi-language-intro-root].phi-state-reference-found .phi-action,
+[data-phi-language-intro-root].phi-state-reference-missing .phi-action,
+[data-phi-language-intro-root].phi-state-error .phi-action {
+  width: 100%;
+}
+
+[data-phi-language-intro-root].phi-state-saving .phi-actions {
+  display: none;
+}
+
+@media (max-height: 620px) {
+  [data-phi-language-intro-root] .phi-frame {
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  [data-phi-language-intro-root].phi-state-welcome .phi-frame {
+    top: 50%;
+  }
+}

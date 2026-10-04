@@ -1,0 +1,15 @@
+Copyright (c) 2026 A.I MY. All rights reserved.
+
+SCHOOL-USE LICENSE NOTICE
+
+This software and its accompanying materials are owned by A.I MY.
+
+A.I MY grants the school or educational organization receiving this software a limited, non-exclusive, non-transferable permission for authorized internal school use.
+
+The software may be installed and used by authorized staff for the school's internal educational and administrative purposes.
+
+Unless A.I MY gives prior written permission, the software may not be sold, sublicensed, redistributed, or transferred to another organization or third party, whether modified or unmodified.
+
+This permission does not transfer ownership of the software, source code, branding, or other intellectual property rights.
+
+No warranty is provided except where required by applicable law.

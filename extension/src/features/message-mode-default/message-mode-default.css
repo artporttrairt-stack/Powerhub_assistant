@@ -1,0 +1,69 @@
+.psqm-message-mode-choice {
+  position: fixed;
+  z-index: 2147483638;
+  width: min(330px, calc(100vw - 32px));
+  padding: 14px;
+  border: 1px solid #a9b7c7;
+  border-radius: 10px;
+  background: #fff;
+  color: #172033;
+  box-shadow: 0 8px 28px rgb(23 32 51 / 16%);
+  font: 14px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.psqm-message-mode-choice__question {
+  margin: 0 28px 12px 0;
+  font-weight: 700;
+}
+
+.psqm-message-mode-choice__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.psqm-message-mode-choice__actions button {
+  min-height: 36px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.psqm-message-mode-choice__primary {
+  border: 1px solid #0759c7;
+  background: #0759c7;
+  color: #fff;
+}
+
+.psqm-message-mode-choice__secondary {
+  border: 1px solid #68798d;
+  background: #fff;
+  color: #172033;
+}
+
+.psqm-message-mode-choice__close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #5d6b7c;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.psqm-message-mode-choice button:focus-visible {
+  outline: 2px solid #0759c7;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .psqm-message-mode-choice {
+    scroll-behavior: auto;
+  }
+}

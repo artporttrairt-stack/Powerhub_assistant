@@ -1,0 +1,66 @@
+TASK 8L — FULL RELEASE CANDIDATE VERIFICATION
+Date: 2026-09-20
+
+1. Runtime source integrity
+Actual source SHA-256: 4f516a607a3da6ba9c476b0c76b5f0d2b23fcc407a0d3b751ac9d8ceb86e57b8
+Expected source SHA-256: 4f516a607a3da6ba9c476b0c76b5f0d2b23fcc407a0d3b751ac9d8ceb86e57b8
+PASS: source runtime archive hash matches the 8J-R2 LIVE PASS checkpoint.
+
+2. Extension byte identity
+PASS: full bundle extension/ is byte-identical to extracted 8J-R2 LIVE PASS runtime.
+
+3. Store-package byte identity
+PASS: every runtime file in store ZIP is byte-identical to 8J-R2 LIVE PASS runtime.
+First ZIP entry: LICENSE.txt
+PASS: manifest.json is at store ZIP root.
+
+4. JavaScript syntax
+PASS: 30/30 JavaScript files parse with node --check.
+
+5. Manifest validation
+PASS: manifest_version=3, version=1.9.7
+PASS: permissions=["storage"]
+PASS: host_permissions=["https://vas.educator.powerschool.com/*"]
+PASS: externally_connectable absent
+
+6. EN/VI parity
+PASS: EN=380, VI=380, missing=0/0
+
+7. 8J-R2 identity equivalence regression
+PASS: stableKey/identityKey/role/Auto-Native-Legacy-normalized identity behavior matches R1 baseline for regression fixtures.
+
+8. 8J-R2 nickname-retirement cleanup contract
+PASS: retired nickname feature remains removed; legacy cleanup keys and Guardian native-name safety wording remain.
+
+9. Security/static scan
+fetch(                     0
+XMLHttpRequest             0
+WebSocket                  0
+eval(                      0
+new Function(              0
+dynamic import(            0
+innerHTML assignment       0
+document.write(            0
+onMessageExternal          0
+onConnectExternal          0
+setInterval(               0
+MutationObserver           1
+PASS: expected security/static counts matched.
+
+10. Teacher-control final-action guard scan
+PASS: no static click path found adjacent to final Send/Create/Publish labels.
+Known native click paths remain limited to frozen helper behavior such as navigation/New Message, recipient add/remove, Group Chat pagination/member add, row forwarding, and Send separately checkbox defaulting.
+
+11. Legacy student nickname/profile storage scan
+/mnt/data/task8l_work/full/Hub_Assistant_FULL_RELEASE_CANDIDATE/extension/src/background/background.js:6:const LEGACY_NICKNAME_KEYS = ["studentNicknames", "studentProfiles", "psqmStorageVersion"];
+PASS: legacy student nickname/profile keys occur only in the targeted background cleanup declaration.
+
+12. Documentation pack
+Documentation files: 6
+Intentional publication placeholders: 9
+PASS: six 8K documentation files present; publication placeholders remain intentionally unresolved before public submission.
+
+13. Package integrity
+    testing: src/state/relations/guardian-student-relations.js   OK
+No errors detected in compressed data of /mnt/data/Hub_Assistant_STORE_PACKAGE.zip.
+PASS: store ZIP integrity checked.

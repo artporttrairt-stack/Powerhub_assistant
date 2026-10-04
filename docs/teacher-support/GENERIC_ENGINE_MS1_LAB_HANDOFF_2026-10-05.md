@@ -27,7 +27,7 @@ The current environment does not have an authenticated `vas.powerschool.com` bro
   - `docs/superpowers/plans/2026-10-05-teacher-support-generic-engine-isolated-lab.md`
   - plan commit: `fa6f8c05fc4b8fccd2e1dd41313b0050a2ee0a6d`
 - Verified implementation/build source commit:
-  - `ec16a4c4566cc0505d78e5020732a269773c5f54`
+  - `80c889cafb3217dfb5b024e3097aef77f3fdea5a`
 
 The verified build source commit is intentionally the implementation checkpoint used to produce the deterministic Lab artifact. Later handoff-only cleanup commits do not redefine that verified artifact.
 
@@ -93,9 +93,9 @@ Verified constraints:
 
 GitHub Actions run:
 
-- run ID: `37243503756`
+- run ID: `37243656041`
 - branch: `agent/ms1-generic-engine-lab-20261005`
-- source commit: `ec16a4c4566cc0505d78e5020732a269773c5f54`
+- source commit: `80c889cafb3217dfb5b024e3097aef77f3fdea5a`
 - conclusion: **SUCCESS**
 
 Command:
@@ -105,7 +105,7 @@ Command:
 Results:
 
 - Phase 0 tests: **38 / 38 PASS**
-- Teacher Support tests: **80 / 80 PASS**
+- Teacher Support tests: **83 / 83 PASS**
 - new-source/test/tool syntax checks: **33 files PASS**
 - Lab build #1: **PASS**
 - Lab checksum validation #1: **21 files PASS**
@@ -127,15 +127,15 @@ Generated checksum file:
 
 `dist/ms1-lab/SHA256SUMS.txt`
 
-SHA-256 of `SHA256SUMS.txt` at verified source commit `ec16a4c...`:
+SHA-256 of `SHA256SUMS.txt` at verified source commit `80c889c...`:
 
-`ecb3d92343ed5b437954db5a37f2192210dca8ac186b5c1132456b598396a445`
+`5ebb342f65653e6edf64d7389dc0c8d956a278df579871f8e9449255761989b3`
 
 Selected artifact hashes:
 
 - `manifest.json`: `3b78b40e48e4b7ee9132a33ab71440c4a032845f3e81049c5f16ed4043598fcc`
 - `lab-bootstrap.js`: `e04d74f3bbabc84a1cb175520f1d2a75797edbf08f38789191f0ffe1084bcbee`
-- `modules/teacher-support/runtime/support-runtime.js`: `1d26d0a5731a02d7990930454aa2836726f8ef6cdb00e4218c016879156b8478`
+- `modules/teacher-support/runtime/support-runtime.js`: `40d18a5404c1c94904d6bcef5f7ebf93fa48d6118fa08a5a2d10e4aa732ade94`
 - `modules/teacher-support/packs/cam-primary/ms1/content/official.js`: `e18aa4e1313be256dbfe60b685c43bea3e1e2c7e1c9d97f14a45bfea3f5c9509`
 - `assets/robot-assistant.png`: `f56b1f8baf7674b6ddffd39fd62febe1cf6a76be3ac42a06f8eb4da711c6a96d`
 
@@ -144,7 +144,7 @@ Selected artifact hashes:
 - protected base: `bcd9cb7996247c1f32706c9b41449ac947e7bb15`
 - source spec: canonical 2026-10-05 Generic Engine spec;
 - source plan: canonical 2026-10-05 grouped plan;
-- source commit: `ec16a4c4566cc0505d78e5020732a269773c5f54`;
+- source commit: `80c889cafb3217dfb5b024e3097aef77f3fdea5a`;
 - Lab version: `0.1.0`.
 
 ## Protected Production State

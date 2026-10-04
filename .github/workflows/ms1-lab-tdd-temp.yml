@@ -22,3 +22,12 @@ jobs:
           node-version: '22'
       - name: Full Teacher Support verification
         run: npm run verify:teacher-support
+      - name: Record deterministic Lab checksum
+        shell: bash
+        run: |
+          echo "=== BUILD_INFO ==="
+          cat dist/ms1-lab/BUILD_INFO.json
+          echo "=== SHA256SUMS ==="
+          cat dist/ms1-lab/SHA256SUMS.txt
+          echo "=== SHA256SUMS DIGEST ==="
+          sha256sum dist/ms1-lab/SHA256SUMS.txt

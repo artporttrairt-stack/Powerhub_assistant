@@ -5,10 +5,11 @@
   const BAR_CLASS = 'hub-support-bar';
   const HIGHLIGHT_CLASS = 'hub-support-highlight';
 
-  function createBubbleUi(documentLike) {
+  function createBubbleUi(documentLike, options = {}) {
     let rootNode = null;
     let barsNode = null;
     let wakeNode = null;
+    let robotNode = null;
     let highlightNode = null;
     let wakeListener = null;
 

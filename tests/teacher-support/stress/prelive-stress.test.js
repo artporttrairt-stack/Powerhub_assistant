@@ -10,6 +10,9 @@ const RESOLVER_PATH = path.join(ROOT, 'extension/modules/teacher-support/core/st
 const CONTROLLER_PATH = path.join(ROOT, 'extension/modules/teacher-support/core/support-controller.js');
 const PACK_PATH = path.join(ROOT, 'extension/modules/teacher-support/packs/cam-primary/ms1/index.js');
 const APPLICABILITY_PATH = path.join(ROOT, 'extension/modules/teacher-support/packs/cam-primary/ms1/applicability.js');
+const ENTRY_PATH = path.join(ROOT, 'extension/modules/teacher-support/ui/entry-button.js');
+const PANEL_PATH = path.join(ROOT, 'extension/modules/teacher-support/ui/assistant-panel.js');
+const INSPECTOR_PATH = path.join(ROOT, 'extension/modules/teacher-support/ui/score-inspector.js');
 
 class StressWindow {
   constructor() {
@@ -407,4 +410,81 @@ test('stress: approved alias remains strand-local while near-matches fail closed
     });
     assert.equal(eligibility.eligible, false, text || '<empty>');
   }
+});
+
+
+test('stress: 1000 real owned-DOM rerenders keep one node per UI component and one target hint', () => {
+  const { createEntryButton } = require(ENTRY_PATH);
+  const { createAssistantPanel } = require(PANEL_PATH);
+  const { createScoreInspector } = require(INSPECTOR_PATH);
+
+  const document = createFakeDocument();
+  const root = document.createElement('div');
+  root.id = 'hub-assistant-teacher-support-root';
+  document.body.appendChild(root);
+
+  const entry = createEntryButton({ document, root, onIntent: () => {} });
+  const panel = createAssistantPanel({
+    document,
+    root,
+    assetUrl: 'robot.png',
+    onIntent: () => {},
+  });
+  const inspector = createScoreInspector({ document, root, onIntent: () => {} });
+
+  for (let i = 0; i < 1000; i += 1) {
+    entry.render({
+      visible: true,
+      attention: i === 0,
+      reducedMotion: false,
+      label: 'Teacher Support',
+    });
+
+    panel.render({
+      open: true,
+      title: 'Support',
+      message: `Cycle ${i}`,
+      robotVisible: true,
+      reducedMotion: false,
+      actions: [
+        { intent: 'guide', label: 'Guide me' },
+        { intent: 'close', label: 'Close' },
+      ],
+    });
+
+    inspector.render({
+      mode: i % 2 === 0 ? 'contextual' : 'reference',
+      referenceOnlyLabel: 'Reference only',
+      officialTitle: 'Academic Achievement',
+      areas: [{ id: 'academic', title: 'Academic Achievement' }],
+      selectedAreaId: i % 2 === 0 ? 'academic' : null,
+      levelCodes: ['EE', 'AE', 'ME', 'BE', 'WB'],
+      selectedReferenceLevel: null,
+      assistLanguage: 'EN',
+      assistLanguages: ['EN', 'VI'],
+      officialCriterion: null,
+      plainExplanation: null,
+      evidence: [],
+      checklist: [],
+      comparison: null,
+      subjectExample: null,
+      teacherDecisionMessage: '',
+    });
+
+    panel.renderTargetHint({ top: i, left: i, width: 40, height: 20 });
+
+    assert.equal(root.querySelectorAll('#hub-assistant-teacher-support-entry').length, 1);
+    assert.equal(root.querySelectorAll('#hub-assistant-teacher-support-panel').length, 1);
+    assert.equal(root.querySelectorAll('#hub-assistant-teacher-support-inspector').length, 1);
+    assert.equal(root.querySelectorAll('#hub-assistant-teacher-support-target-hint').length, 1);
+  }
+
+  panel.clearTargetHint();
+  assert.equal(root.querySelector('#hub-assistant-teacher-support-target-hint'), null);
+  assert.equal(root.children.length, 3);
+
+  entry.destroy();
+  panel.destroy();
+  inspector.destroy();
+  assert.equal(root.children.length, 0);
 });

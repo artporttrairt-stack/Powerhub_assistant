@@ -46,6 +46,27 @@
       return section;
     }
 
+    function renderAreaControls(parent, viewModel) {
+      if (viewModel.mode !== 'reference') return;
+      const areas = Array.isArray(viewModel.areas) ? viewModel.areas : [];
+      if (!areas.length) return;
+      const controls = document.createElement('div');
+      controls.classList.add('ha-ts-reference-areas');
+      const selected = viewModel.selectedAreaId || null;
+      for (const area of areas) {
+        if (!area || typeof area.id !== 'string') continue;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.classList.add('ha-ts-reference-area');
+        button.setAttribute('data-reference-area', area.id);
+        button.setAttribute('aria-pressed', area.id === selected ? 'true' : 'false');
+        button.textContent = String(area.title || area.id);
+        button.addEventListener('click', () => onIntent({ type: 'reference-area', value: area.id }));
+        controls.appendChild(button);
+      }
+      parent.appendChild(controls);
+    }
+
     function renderReferenceControls(parent, viewModel) {
       const controls = document.createElement('div');
       controls.classList.add('ha-ts-reference-levels');
@@ -99,6 +120,7 @@
           'ha-ts-reference-only',
           viewModel.referenceOnlyLabel || 'Reference only'
         ));
+        renderAreaControls(node, viewModel);
       }
 
       node.appendChild(textNode('h3', 'ha-ts-inspector-title', viewModel.officialTitle));

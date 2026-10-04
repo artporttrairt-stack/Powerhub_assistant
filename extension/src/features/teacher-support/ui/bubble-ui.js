@@ -3,6 +3,7 @@
 
   const ROOT_ID = 'hub-teacher-support-root';
   const BAR_CLASS = 'hub-support-bar';
+  const LABEL_CLASS = 'hub-support-label';
   const HIGHLIGHT_CLASS = 'hub-support-highlight';
 
   function createBubbleUi(documentLike, options = {}) {
@@ -53,10 +54,11 @@
     }
 
     function makeBar(item) {
-      const bar = documentLike.createElement('button');
-      bar.className = BAR_CLASS;
+      const isLabel = item && item.kind === 'label';
+      const bar = documentLike.createElement(isLabel ? 'div' : 'button');
+      bar.className = isLabel ? LABEL_CLASS : BAR_CLASS;
       bar.textContent = String(item && (item.label || item.text || item.id) || '');
-      if (bar.dataset) bar.dataset.itemId = String(item && item.id || '');
+      if (!isLabel && bar.dataset) bar.dataset.itemId = String(item && item.id || '');
       return bar;
     }
 

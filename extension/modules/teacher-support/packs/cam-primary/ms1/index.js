@@ -38,6 +38,7 @@
       levelCodes: deps.official.LEVEL_CODES,
       assistLanguages: deps.locale.SUPPORTED_ASSIST_LANGUAGES,
       defaultAssistLanguage: deps.locale.DEFAULT_ASSIST_LANGUAGE,
+      introTitle: 'Need help with MS1?',
     });
 
     function getReferenceOptions() {

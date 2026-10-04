@@ -14,7 +14,8 @@
   animation: ha-ts-entry-spring 560ms cubic-bezier(.2,.9,.2,1) 1;
 }
 
-.ha-ts-panel {
+.ha-ts-panel,
+.ha-ts-inspector {
   position: fixed;
   right: 20px;
   bottom: 76px;
@@ -27,7 +28,8 @@
 }
 
 .ha-ts-panel[hidden],
-.ha-ts-entry[hidden] {
+.ha-ts-entry[hidden],
+.ha-ts-inspector[hidden] {
   display: none;
 }
 
@@ -41,21 +43,44 @@
   animation: ha-ts-robot-bounce 1.8s ease-in-out 3;
 }
 
-.ha-ts-panel-actions {
+.ha-ts-panel-actions,
+.ha-ts-reference-levels,
+.ha-ts-assist-languages {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
 .ha-ts-action,
-.ha-ts-entry {
+.ha-ts-entry,
+.ha-ts-reference-level,
+.ha-ts-assist-language {
   font: inherit;
 }
 
 .ha-ts-action:focus-visible,
-.ha-ts-entry:focus-visible {
+.ha-ts-entry:focus-visible,
+.ha-ts-reference-level:focus-visible,
+.ha-ts-assist-language:focus-visible {
   outline: 3px solid currentColor;
   outline-offset: 3px;
+}
+
+.ha-ts-target-hint {
+  position: fixed;
+  box-sizing: border-box;
+  border: 3px solid currentColor;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 2147482999;
+}
+
+.ha-ts-reference-only {
+  font-weight: 700;
+}
+
+.ha-ts-content-step {
+  margin-block: 12px;
 }
 
 @keyframes ha-ts-entry-spring {

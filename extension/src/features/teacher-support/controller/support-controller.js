@@ -22,7 +22,7 @@
       return showWorkflowPicker();
     }
     function continueFromHere(inputs={}) { const selection=registry.select(withUiState(inputs)); if(!selection||selection.status!=='matched') return showWorkflowPicker(); return commandFor(selection.workflow,inputs); }
-    function selectWorkflow(id,inputs={}) { const workflow=typeof registry.get==='function'?registry.get(id):null; if(!workflow||workflow.status!=='READY'||typeof workflow.applicability!=='function') return showWorkflowPicker(); return commandFor(workflow,inputs); }
+    function selectWorkflow(id,inputs={}) { const workflow=typeof registry.get==='function'?registry.get(id):null; if(!workflow||workflow.status!=='READY'||typeof workflow.applicability!=='function') return showWorkflowPicker(); const applicability=workflow.applicability(withUiState(inputs)); if((!applicability||applicability.matched!==true)&&workflow.allowNavigationBeforeApplicability!==true)return showWorkflowPicker(); return commandFor(workflow,inputs); }
     function quickReference(){return makeCommand(COMMANDS.OPEN_REFERENCE);}
     function knowAlready(){if(ui&&typeof ui.collapse==='function')ui.collapse();return makeCommand(COMMANDS.COLLAPSE);}
     function showMe(target){if(ui&&typeof ui.highlight==='function')ui.highlight(target);return makeCommand(COMMANDS.SHOW_NAVIGATION_TARGET,{target,mode:'highlight-only'});}

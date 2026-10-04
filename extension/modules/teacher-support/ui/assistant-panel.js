@@ -7,6 +7,7 @@
 
     let panel = null;
     let firstAction = null;
+    let targetHint = null;
 
     function focusEntry() {
       const entry = root.querySelector('#hub-assistant-teacher-support-entry');
@@ -91,7 +92,35 @@
       focusEntry();
     }
 
+    function clearTargetHint() {
+      if (targetHint) targetHint.remove();
+      targetHint = null;
+    }
+
+    function renderTargetHint(rect) {
+      clearTargetHint();
+      if (!rect) return null;
+
+      const top = Number(rect.top);
+      const left = Number(rect.left);
+      const width = Number(rect.width);
+      const height = Number(rect.height);
+      if (![top, left, width, height].every(Number.isFinite)) return null;
+
+      targetHint = document.createElement('div');
+      targetHint.id = 'hub-assistant-teacher-support-target-hint';
+      targetHint.classList.add('ha-ts-target-hint');
+      targetHint.setAttribute('aria-hidden', 'true');
+      targetHint.style.top = `${top}px`;
+      targetHint.style.left = `${left}px`;
+      targetHint.style.width = `${Math.max(0, width)}px`;
+      targetHint.style.height = `${Math.max(0, height)}px`;
+      root.appendChild(targetHint);
+      return targetHint;
+    }
+
     function destroy() {
+      clearTargetHint();
       if (!panel) return;
       panel.removeEventListener('keydown', handleKeydown);
       panel.remove();
@@ -99,7 +128,14 @@
       firstAction = null;
     }
 
-    return Object.freeze({ render, focusInitial, close, destroy });
+    return Object.freeze({
+      render,
+      focusInitial,
+      close,
+      renderTargetHint,
+      clearTargetHint,
+      destroy,
+    });
   }
 
   if (rootGlobal) {

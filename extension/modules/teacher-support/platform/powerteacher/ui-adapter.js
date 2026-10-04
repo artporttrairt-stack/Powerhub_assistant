@@ -95,10 +95,11 @@
 
     function readScale() {
       const inspector = document.querySelector(SELECTORS.nativeInspector);
-      if (!visible(inspector) || typeof inspector.querySelectorAll !== 'function') {
+      if (!visible(inspector)) {
         return Object.freeze({ open: false, codes: Object.freeze([]) });
       }
-      const codes = [...inspector.querySelectorAll(SELECTORS.nativeScoreChoice)]
+      const codes = [...document.querySelectorAll(SELECTORS.nativeScoreChoice)]
+        .filter(visible)
         .map((node) => readLabel(node))
         .filter(Boolean);
       return Object.freeze({ open: true, codes: Object.freeze(codes) });

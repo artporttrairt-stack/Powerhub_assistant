@@ -9,6 +9,11 @@
       throw new TypeError('resolver is required.');
     }
 
+    function matchedPack(context) {
+      const selection = registry.select(context || {});
+      return selection.status === 'matched' && selection.pack ? selection.pack : null;
+    }
+
     function evaluate({ context = {}, uiState = {}, mode = 'active' } = {}) {
       const selection = registry.select(context);
       let workflowDecision = null;
@@ -41,7 +46,19 @@
       });
     }
 
-    return Object.freeze({ evaluate });
+    function getReferenceOptions(context = {}) {
+      const pack = matchedPack(context);
+      if (!pack || typeof pack.getReferenceOptions !== 'function') return null;
+      return pack.getReferenceOptions();
+    }
+
+    function getReference({ context = {}, areaId, levelCode, language, subject } = {}) {
+      const pack = matchedPack(context);
+      if (!pack || typeof pack.getReference !== 'function') return null;
+      return pack.getReference({ areaId, levelCode, language, subject });
+    }
+
+    return Object.freeze({ evaluate, getReferenceOptions, getReference });
   }
 
   if (root) {

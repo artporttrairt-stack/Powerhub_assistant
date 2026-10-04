@@ -209,6 +209,40 @@ test('start is idempotent and destroy removes one owned lifecycle boundary', () 
   assert.deepEqual(env.ui.calls.destroyed.sort(), ['entry', 'inspector', 'panel']);
 });
 
+test('entry open shows pack-owned intro before any walkthrough reconcile', () => {
+  const env = build({
+    initialUi: baseUi({
+      grading: { available: true, active: false },
+      standards: { available: false, verified: false, gridCount: 0, gearVisible: false },
+      filter: { visible: false, value: '', toggleLabel: 'Show Filter' },
+      renderedHeaders: [],
+      selectedCell: { found: false, standardPosition: null },
+      scale: { codes: [] },
+      nativeInspectorOpen: false,
+    }),
+  });
+
+  env.runtime.start();
+  const readsAfterStart = env.readCount;
+  env.ui.emit('open');
+
+  assert.equal(env.readCount, readsAfterStart);
+  const intro = env.ui.calls.panel.at(-1);
+  assert.equal(intro.title, 'Need help with MS1?');
+  assert.deepEqual(intro.actions.slice(0, 4), [
+    { intent: 'guide', label: 'Guide me' },
+    { intent: 'resume', label: 'Help me from here' },
+    { intent: 'quiet', label: 'I know already' },
+    { intent: 'reference', label: 'Quick reference' },
+  ]);
+  assert.equal(env.ui.calls.inspector.length, 0);
+
+  env.ui.emit('guide');
+  assert.equal(env.readCount, readsAfterStart + 1);
+  assert.equal(env.runtime.snapshot().state, 'GUIDANCE');
+  assert.equal(env.ui.calls.panel.at(-1).stepId, 'open-grading');
+});
+
 test('teacher-led walkthrough follows pack-produced states and show-target only highlights', () => {
   const env = build({
     initialUi: baseUi({
@@ -315,6 +349,8 @@ test('verified contextual cell opens inspector and reference changes never mutat
   const env = build();
   env.runtime.start();
   env.ui.emit('open');
+  assert.equal(env.ui.calls.inspector.length, 0);
+  env.ui.emit('guide');
 
   assert.equal(env.runtime.snapshot().state, 'CONTEXT_READY');
   let model = env.ui.calls.inspector.at(-1);

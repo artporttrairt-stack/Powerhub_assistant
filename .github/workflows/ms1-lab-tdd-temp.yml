@@ -20,14 +20,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Existing Phase 0 tests
-        run: npm test
-      - name: Teacher Support tests when present
-        shell: bash
-        run: |
-          mapfile -d '' tests < <(find tests/teacher-support -type f -name '*.test.js' -print0 2>/dev/null | sort -z)
-          if [ "${#tests[@]}" -gt 0 ]; then
-            node --test "${tests[@]}"
-          else
-            echo "No Teacher Support tests yet"
-          fi
+      - name: Full Teacher Support verification
+        run: npm run verify:teacher-support

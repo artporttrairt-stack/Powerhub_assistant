@@ -53,7 +53,13 @@
 
     function selectWorkflow(id, inputs) {
       const workflow = typeof registry.get === 'function' ? registry.get(id) : null;
-      return commandFor(workflow, inputs || {});
+      const args = inputs || {};
+      if (!workflow || workflow.status !== 'READY' || typeof workflow.applicability !== 'function') {
+        return showWorkflowPicker();
+      }
+      const applicability = workflow.applicability(args.context);
+      if (!applicability || applicability.matched !== true) return showWorkflowPicker();
+      return commandFor(workflow, args);
     }
 
     function quickReference() {

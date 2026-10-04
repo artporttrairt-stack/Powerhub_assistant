@@ -18,11 +18,11 @@ function validContext() {
   };
 }
 
-test('MS1 workflow metadata stays hidden until content source gate is complete', () => {
+test('MS1 workflow metadata is visible after content source gate is complete', () => {
   assert.equal(CAM_PRIMARY_MS1_WORKFLOW.id, 'cam-primary.ms1');
   assert.equal(CAM_PRIMARY_MS1_WORKFLOW.label, 'MS1 Report');
-  assert.equal(CAM_PRIMARY_MS1_WORKFLOW.status, 'SOURCE_REQUIRED');
-  assert.equal(CAM_PRIMARY_MS1_WORKFLOW.visibleInPicker, false);
+  assert.equal(CAM_PRIMARY_MS1_WORKFLOW.status, 'READY');
+  assert.equal(CAM_PRIMARY_MS1_WORKFLOW.visibleInPicker, true);
   assert.deepEqual(CAM_PRIMARY_MS1_WORKFLOW.navigation, { targetView: 'standards', filterQuery: 'MS1' });
   assert.equal(CAM_PRIMARY_MS1_WORKFLOW.guidancePackId, 'cam-primary.ms1');
 });

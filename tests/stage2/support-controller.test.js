@@ -38,7 +38,7 @@ test('Continue from where I am resumes the uniquely applicable READY workflow', 
 });
 
 test('selected READY workflow follows generic resolver commands', () => {
-  const { controller } = setup(wf('pilot'));
+  const { controller } = setup(wf('pilot', { matched: true }));
   assert.equal(controller.selectWorkflow('pilot', { uiState: uiState(), context: {}, mode: 'guide' }).type, 'SHOW_NAVIGATION_TARGET');
   assert.equal(controller.selectWorkflow('pilot', { uiState: uiState({ targetView: 'standards', filterVisible: true, filterQuery: '' }), context: {}, mode: 'guide' }).type, 'SHOW_FILTER_QUERY');
   assert.equal(controller.selectWorkflow('pilot', { uiState: uiState({ targetView: 'standards', filterVisible: true, filterQuery: 'TARGET', workflowMarkerPresent: true }), context: {}, mode: 'guide' }).type, 'OPEN_TASK_PICKER');
@@ -62,7 +62,7 @@ test('Show me highlights only and never invokes native target', () => {
 });
 
 test('fake workflow works with unchanged controller', () => {
-  const { controller } = setup(wf('future-grade7-music', { query: 'EOS' }));
+  const { controller } = setup(wf('future-grade7-music', { query: 'EOS', matched: true }));
   const command = controller.selectWorkflow('future-grade7-music', { uiState: uiState({ targetView: 'standards', filterVisible: true, filterQuery: 'EOS', workflowMarkerPresent: true }), context: {}, mode: 'guide' });
   assert.equal(command.type, 'OPEN_TASK_PICKER');
   assert.equal(command.workflowId, 'future-grade7-music');
@@ -78,4 +78,16 @@ test('controller source contains only semantic actions, no synthetic native acti
   const source = fs.readFileSync(path.join(__dirname, '../../extension/src/features/teacher-support/controller/support-controller.js'), 'utf8');
   assert.doesNotMatch(source, /\.click\s*\(|dispatchEvent\s*\(|localStorage|sessionStorage/);
   assert.doesNotMatch(source, /\bMS1\b|CAM Primary|Grade 7|Music|\bEOS\b/);
+});
+
+test('direct workflow selection cannot bypass applicability', () => {
+  const registry = createWorkflowRegistry();
+  registry.register({
+    ...wf('cam-only'),
+    applicability: (context) => ({ matched: Boolean(context && context.camVerified), reason: 'fixture-cam' }),
+  });
+  const ui = uiSpy();
+  const controller = createSupportController({ registry, resolveState: resolveSupportState, ui });
+  assert.equal(controller.selectWorkflow('cam-only', { context: { camVerified: false }, uiState: uiState(), mode: 'guide' }).type, 'SHOW_WORKFLOW_PICKER');
+  assert.equal(controller.selectWorkflow('cam-only', { context: { camVerified: true }, uiState: uiState(), mode: 'guide' }).type, 'SHOW_NAVIGATION_TARGET');
 });

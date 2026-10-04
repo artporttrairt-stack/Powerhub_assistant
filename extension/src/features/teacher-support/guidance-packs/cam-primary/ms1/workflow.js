@@ -5,8 +5,8 @@
     id: 'cam-primary.ms1',
     version: '1.0.0',
     label: 'MS1 Report',
-    status: 'SOURCE_REQUIRED',
-    visibleInPicker: false,
+    status: 'READY',
+    visibleInPicker: true,
     navigation: Object.freeze({ targetView: 'standards', filterQuery: 'MS1' }),
     guidancePackId: 'cam-primary.ms1',
   });

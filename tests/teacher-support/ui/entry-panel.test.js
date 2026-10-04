@@ -142,3 +142,38 @@ test('CSS contains finite motion, focus visibility, and reduced-motion override'
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.equal(/\binfinite\b/i.test(css), false);
 });
+
+
+test('robot bounce is applied only on a closed-to-open panel transition', () => {
+  const { createAssistantPanel } = require(PANEL_PATH);
+  const { document, root } = setup();
+  const panel = createAssistantPanel({ document, root, assetUrl: 'robot.png', onIntent: () => {} });
+  const model = {
+    open: true,
+    title: 'Support',
+    message: 'Message',
+    robotVisible: true,
+    reducedMotion: false,
+    actions: [{ intent: 'guide', label: 'Guide me' }],
+  };
+
+  panel.render(model);
+  assert.equal(root.querySelector('.ha-ts-robot').classList.contains('ha-ts-robot-bounce'), true);
+
+  panel.render(model);
+  assert.equal(root.querySelector('.ha-ts-robot').classList.contains('ha-ts-robot-bounce'), false);
+
+  panel.close();
+  panel.render(model);
+  assert.equal(root.querySelector('.ha-ts-robot').classList.contains('ha-ts-robot-bounce'), true);
+
+  panel.close();
+  panel.render({ ...model, reducedMotion: true });
+  assert.equal(root.querySelector('.ha-ts-robot').classList.contains('ha-ts-robot-bounce'), false);
+});
+
+test('panel CSS provides an opaque readable card surface', () => {
+  const css = fs.readFileSync(CSS_PATH, 'utf8');
+  assert.match(css, /\.ha-ts-panel[\s\S]*background:/);
+  assert.match(css, /\.ha-ts-panel[\s\S]*box-shadow:/);
+});

@@ -42,7 +42,7 @@ test('Lab copies one canonical generic engine, one MS1 pack, and local robot ass
   const manifest = JSON.parse(fs.readFileSync(path.join(DIST, 'manifest.json'), 'utf8'));
   assert.deepEqual(manifest.web_accessible_resources, [{
     resources: ['assets/robot-assistant.png'],
-    matches: ['https://vas.powerschool.com/teachers/*'],
+    matches: ['https://vas.powerschool.com/*'],
   }]);
 });
 

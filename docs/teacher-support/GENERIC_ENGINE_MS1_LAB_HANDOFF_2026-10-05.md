@@ -253,6 +253,48 @@ No Store ZIP has been created or published.
 
 No merge to `main` is authorized by this handoff.
 
+## Chrome live-load manifest blocker — fixed
+
+The first Windows live-load attempt exposed a Lab packaging bug before runtime startup:
+
+`Invalid value for 'web_accessible_resources[0]'. Invalid match pattern.`
+
+Root cause: the Lab builder reused the teacher-path content-script match for Manifest V3 `web_accessible_resources.matches`.
+
+Fix:
+
+- content script remains restricted to `https://vas.powerschool.com/teachers/*`
+- web-accessible robot asset now uses `https://vas.powerschool.com/*`
+
+TDD:
+
+- RED commit: `cf96e83d5bce61157c50a87c41ee15c60ee036f8`
+- RED run: `37250581539`
+- fix commit: `1441d90246ca8c59750d5d20ab8f640b07d16ff4`
+
+Final manifest-fixed gate:
+
+- source: `a16c933dcd90388863a6ed3440306032315de681`
+- Actions run: `37250830972`
+- Phase 0: **38 / 38 PASS**
+- Teacher Support: **95 / 95 PASS**
+- 10 clean-process soak runs: **10 / 10 PASS**
+- each soak: **95 / 95 PASS**
+- deterministic Lab build: **PASS**
+- protected production diff: **PASS**
+- headed Chromium loader smoke: **no manifest / invalid-match-pattern error**
+
+**Use only this artifact for the next live attempt:**
+
+- name: `ms1-lab-live-load-fixed`
+- artifact ID: `11320597354`
+- archive SHA-256: `5748abb1c25d9ee33e584090751c024abde7cbe5e8500b991fa2e8ff36784d8c`
+- internal `SHA256SUMS.txt` digest: `b62c6cab5c54a8940216bf6b3f0ce981d54fb3e0dc2e382609de28c8a5e45700`
+
+**Do not use** the earlier `ms1-lab-final-review`, `ms1-lab-prelive-stress`, or `ms1-lab-prelive-rerun` artifacts for live loading.
+
+Canonical Teacher Support runtime/module bytes are unchanged from `02427d5...`; this fix is confined to the Lab builder and its regression test.
+
 ## Live Smoke — Pending Gate
 
 The required live smoke must be run only in an authorized PowerTeacher test account/profile with the unpacked `dist/ms1-lab` build from the verified implementation checkpoint.

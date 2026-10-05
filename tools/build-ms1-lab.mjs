@@ -22,7 +22,8 @@ const PROTECTED_BASE = 'bcd9cb7996247c1f32706c9b41449ac947e7bb15';
 const SOURCE_SPEC = 'docs/superpowers/specs/2026-10-05-teacher-support-generic-engine-isolated-lab-design.md';
 const SOURCE_PLAN = 'docs/superpowers/plans/2026-10-05-teacher-support-generic-engine-isolated-lab.md';
 const LAB_VERSION = '0.1.0';
-const POWERTEACHER_MATCH = 'https://vas.powerschool.com/teachers/*';
+const POWERTEACHER_PAGE_MATCH = 'https://vas.powerschool.com/teachers/*';
+const POWERTEACHER_ORIGIN_MATCH = 'https://vas.powerschool.com/*';
 
 const SCRIPT_ORDER = Object.freeze([
   'modules/teacher-support/core/workflow-registry.js',
@@ -129,16 +130,16 @@ writeJson(resolve(DIST, 'manifest.json'), {
   version: LAB_VERSION,
   description: 'Isolated Teacher Support development Lab for authorized PowerTeacher validation.',
   permissions: [],
-  host_permissions: [POWERTEACHER_MATCH],
+  host_permissions: [POWERTEACHER_PAGE_MATCH],
   content_scripts: [{
-    matches: [POWERTEACHER_MATCH],
+    matches: [POWERTEACHER_PAGE_MATCH],
     js: SCRIPT_ORDER,
     css: ['modules/teacher-support/ui/teacher-support.css'],
     run_at: 'document_idle',
   }],
   web_accessible_resources: [{
     resources: ['assets/robot-assistant.png'],
-    matches: [POWERTEACHER_MATCH],
+    matches: [POWERTEACHER_ORIGIN_MATCH],
   }],
 });
 

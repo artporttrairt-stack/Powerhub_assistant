@@ -308,3 +308,40 @@ This is **not** a live PASS.
 Next permitted gate:
 
 **authorized unpacked-extension PowerTeacher smoke using the stress-verified artifact.**
+
+
+## Independent Rerun #2
+
+A second independent pre-live rerun was executed after the first stress/trace pass, without changing canonical Teacher Support module bytes.
+
+GitHub Actions:
+
+- run: `37246481661`
+- rerun workflow source commit: `16131545bcc29e7d934dee0a4d84f6bef1eba7c5`
+- conclusion: **SUCCESS**
+- Phase 0: **38 / 38 PASS**
+- Teacher Support full verifier: **95 / 95 PASS**
+- ten additional clean-process soak runs: **10 / 10 PASS**
+- each soak: **95 / 95 PASS**
+- deterministic Lab build: **PASS**
+- protected production diff: **PASS**
+
+Rerun artifact:
+
+- name: `ms1-lab-prelive-rerun`
+- artifact ID: `11319581028`
+- archive digest: `sha256:5063b8cb17c08c6731b52973cd5d1e11138a83c675f7be5e38db34277dfd912c`
+- internal `SHA256SUMS.txt` digest: `5ced1acecb8962906b20815029fc93d274a2d306406644a244c3078b9b7579bd`
+
+Trace verification against canonical implementation `02427d5763dd73889b6430af30aff0f71af08a9a`:
+
+- `extension/modules/teacher-support/**`: **zero diff**
+- `extension/manifest.json`: **zero diff**
+- pre-existing `extension/src/**`: **zero diff**
+- pre-existing `extension/assets/**`: **zero diff**
+
+The rerun checksum differs from the first stress artifact because `BUILD_INFO.sourceCommit` records the rerun workflow commit. It does not indicate a canonical runtime/module change.
+
+The temporary rerun workflow was deleted immediately after evidence collection.
+
+**Result: the second independent rerun reproduced the first pre-live stress result with zero canonical module drift and zero deterministic blocker.**

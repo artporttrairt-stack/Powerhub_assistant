@@ -223,6 +223,22 @@ The stress artifact contains the same canonical Teacher Support module bytes as 
 
 Stress/trace closes the deterministic pre-live gate only. It does **not** replace the authorized PowerTeacher smoke.
 
+
+Independent rerun #2 reproduced the same gate:
+
+- Actions run: `37246481661`
+- Phase 0: **38 / 38 PASS**
+- Teacher Support: **95 / 95 PASS**
+- ten clean-process soak runs: **10 / 10 PASS**
+- rerun artifact: `ms1-lab-prelive-rerun`
+- artifact ID: `11319581028`
+- archive digest: `sha256:5063b8cb17c08c6731b52973cd5d1e11138a83c675f7be5e38db34277dfd912c`
+- internal checksum-list digest: `5ced1acecb8962906b20815029fc93d274a2d306406644a244c3078b9b7579bd`
+- canonical `extension/modules/teacher-support/**` diff from `02427d5...`: **zero**
+- protected production diff: **zero**
+
+The checksum differs from the first stress artifact only because the deterministic `BUILD_INFO.sourceCommit` records the rerun source commit; canonical Teacher Support module bytes are unchanged.
+
 ## Protected Production State
 
 Verification confirms no change to:

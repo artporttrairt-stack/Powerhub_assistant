@@ -1,0 +1,32 @@
+name: Temporary MS1 Manifest Fix TDD
+
+on:
+  push:
+    branches:
+      - agent/ms1-generic-engine-lab-20261005
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Full Teacher Support verification
+        run: npm run verify:teacher-support
+      - name: Upload fixed Lab artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ms1-lab-manifest-fix
+          path: dist/ms1-lab
+          if-no-files-found: error
+          retention-days: 7

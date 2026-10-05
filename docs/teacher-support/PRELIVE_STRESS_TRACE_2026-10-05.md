@@ -345,3 +345,114 @@ The rerun checksum differs from the first stress artifact because `BUILD_INFO.so
 The temporary rerun workflow was deleted immediately after evidence collection.
 
 **Result: the second independent rerun reproduced the first pre-live stress result with zero canonical module drift and zero deterministic blocker.**
+
+
+## Live-load blocker discovered during authorized load attempt
+
+Windows Chrome rejected the previously stress-verified Lab before runtime startup with:
+
+`Invalid value for 'web_accessible_resources[0]'. Invalid match pattern.`
+
+Observed failing value in the generated artifact:
+
+`https://vas.powerschool.com/teachers/*`
+
+### Root cause
+
+`tools/build-ms1-lab.mjs` reused one `POWERTEACHER_MATCH` constant for:
+
+- `host_permissions`
+- `content_scripts[0].matches`
+- `web_accessible_resources[0].matches`
+
+The path-scoped pattern is valid for the content script boundary, but the Manifest V3 web-accessible-resource grant must be expressed at the site origin boundary.
+
+The fix deliberately splits the two concepts:
+
+- page/content boundary: `https://vas.powerschool.com/teachers/*`
+- web-accessible-resource origin boundary: `https://vas.powerschool.com/*`
+
+The content script remains restricted to the teacher path. Only the local robot asset receives the origin-level WAR grant required by Chrome.
+
+### TDD evidence
+
+RED regression commit:
+
+`cf96e83d5bce61157c50a87c41ee15c60ee036f8`
+
+RED Actions run:
+
+`37250581539`
+
+The build test failed exactly on:
+
+- expected WAR match: `https://vas.powerschool.com/*`
+- actual WAR match: `https://vas.powerschool.com/teachers/*`
+
+Fix commit:
+
+`1441d90246ca8c59750d5d20ab8f640b07d16ff4`
+
+Post-fix full verifier run:
+
+`37250615477`
+
+Results:
+
+- Phase 0: **38 / 38 PASS**
+- Teacher Support: **95 / 95 PASS**
+- deterministic Lab build: **PASS**
+- protected production diff: **PASS**
+
+### Post-fix soak and browser-loader check
+
+Final manifest-fixed soak source:
+
+`a16c933dcd90388863a6ed3440306032315de681`
+
+Actions run:
+
+`37250830972`
+
+Results:
+
+- full verifier: **PASS**
+- Teacher Support: **95 / 95 PASS**
+- ten additional clean-process soak runs: **10 / 10 PASS**
+- each soak: **95 / 95 PASS**
+- generated WAR value: `https://vas.powerschool.com/*`
+- internal `SHA256SUMS.txt` digest: `b62c6cab5c54a8940216bf6b3f0ce981d54fb3e0dc2e382609de28c8a5e45700`
+
+The exact downloaded artifact was also loaded with headed Chromium under Xvfb using `--load-extension`. No `Failed to load extension`, `Invalid value`, or `Invalid match pattern` error was emitted during the loader smoke.
+
+### Final live-load artifact
+
+Use only:
+
+- artifact name: `ms1-lab-live-load-fixed`
+- artifact ID: `11320597354`
+- artifact source: `a16c933dcd90388863a6ed3440306032315de681`
+- archive digest: `sha256:5748abb1c25d9ee33e584090751c024abde7cbe5e8500b991fa2e8ff36784d8c`
+- internal checksum-list digest: `b62c6cab5c54a8940216bf6b3f0ce981d54fb3e0dc2e382609de28c8a5e45700`
+
+### Deprecated artifacts — DO NOT USE FOR LIVE LOAD
+
+The following earlier Lab artifacts predate the manifest fix and must not be used for live loading:
+
+- `ms1-lab-final-review`
+- `ms1-lab-prelive-stress`
+- `ms1-lab-prelive-rerun`
+
+Their runtime module bytes were valid, but their generated WAR manifest entry was rejected by Chrome.
+
+### Scope of change
+
+Comparison against canonical implementation checkpoint `02427d5...` confirms:
+
+- `extension/modules/teacher-support/**`: **zero diff**
+- protected production runtime: **zero diff**
+- packaging fix only:
+  - `tools/build-ms1-lab.mjs`
+  - `tests/teacher-support/build/build-ms1-lab.test.js`
+
+The temporary manifest-fix workflow was removed after evidence collection.

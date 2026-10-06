@@ -12,8 +12,9 @@ Use this precedence:
 
 1. `docs/superpowers/specs/2026-10-06-step-09-live-runtime-integration-design.md`
 2. `docs/superpowers/plans/2026-10-06-step-09-live-runtime-integration.md`
-3. exact final Step 8 runtime + handoff + hash inventory
-4. current task RED/GREEN evidence
+3. `docs/superpowers/plans/2026-10-06-step-09-codex-execution-error-detection-playbook.md`
+4. exact final Step 8 runtime + handoff + hash inventory
+5. current task RED/GREEN evidence
 
 This file is a navigation aid only and cannot weaken the spec or plan.
 
@@ -162,7 +163,19 @@ Quota-first execution:
 - strongest fresh whole-Step-9 review in Task 7;
 - additional fresh agent only on Critical/ambiguous failure.
 
-Use High reasoning only for lifecycle/epoch, safety, repeated unexplained failures, and final review. Use Medium for routine tests/wiring/packaging.
+Recommended model routing:
+
+- default implementation: **GPT-5.6 Sol / Medium**;
+- Task 2 lifecycle: **GPT-6 Astra / High**;
+- Task 5 epoch/observer: **GPT-6 Astra / High**;
+- real stress/lifecycle bug diagnosis: **GPT-6 Astra / High**;
+- Batch C architecture/safety review: **GPT-6 Astra / High**;
+- Task 7 whole-Step-9 review: **GPT-6 Astra / High**;
+- routine packaging/evidence: **GPT-5.6 Sol / Medium** (Terra may be used for purely mechanical bookkeeping if available).
+
+If Astra is unavailable, use **GPT-5.6 Sol / High** for those Astra slots.
+
+Do not use highest reasoning by default.
 
 ## Stop conditions
 
